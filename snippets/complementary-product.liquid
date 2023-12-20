@@ -1,0 +1,89 @@
+{% comment %}
+snippets/complementary-product.liquid
+
+Renders a complementary product block on product and featured product sections.
+
+Accepts:
+
+- block: {Object} Section block.
+- section: {Object} Section.
+- product: {Object} Product.
+
+Usage:
+
+{%
+  render 'complementary-product',
+  block: block,
+  section: section,
+  product: product
+%}
+{% endcomment %}
+
+{%- liquid
+
+ assign is_carousel = false
+ if block.settings.limit > 3
+  assign is_carousel = true
+ endif
+
+-%}
+{% if is_carousel %}
+{% capture slideshow_config %}{
+ "wrapAround": true,
+ "freeScroll": true,
+ "dragThreshold":"15",
+ "draggable": true,
+ "pauseAutoPlayOnHover": false,
+ "prevNextButtons": true,
+ "pageDots": false
+}{% endcapture %}
+{% endif %}
+
+<div class="complementary__products complementary__products--{{ block.id }} product__section-content__block product__section--element" {{ block.shopify_attributes }}>
+{%- if recommendations.performed -%}
+  <div class="js-complementary-products {% unless is_carousel %}grid__wrapper edge{% endunless %}"
+    data-base-url="{{ routes.product_recommendations_url }}"
+    data-product-id="{{ product.id }}"
+    data-section-id="{{ section.id }}"
+    data-intent="complementary"
+    data-limit="{{ block.settings.limit }}"
+    >
+    {%- if recommendations.performed and recommendations.products_count > 0 -%}
+      {% if block.settings.heading != blank %}
+        <h4 class="span-12 auto">{{ block.settings.heading }}</h4>
+      {% endif %}
+
+      {% if is_carousel %}
+      <div class="flickity__section js-carousel" data-flickity-config='{{ slideshow_config }}' data-count="{{ recommendations.products_count | plus: 0 }}">
+      {% endif %}
+      {%- for product in recommendations.products limit: section.settings.limit -%}
+        <div class="product-index {% unless is_carousel %}span-4 sm-span-6 auto{% endunless %}"
+          data-product-id="{{ product.id }}"
+          data-alpha="{{ product.title }}"
+          data-price="{{ product.price }}"
+          {% unless is_carousel %}
+          data-aos="{{ settings.scroll_animation }}"
+          data-aos-delay="{{ forloop.index | times: 150  }}"
+          {% endunless %}>
+          {%
+            render 'complementary-product-listing',
+            product: product
+          %}
+        </div>
+      {%- endfor -%}
+      {% if is_carousel %}
+      </div><!-- /.js-carousel -->
+      {% endif %}
+    {%- endif -%}
+  </div>
+{%- else  -%}
+  <div class="js-complementary-products {% unless is_carousel %}grid__wrapper edge{% endunless %}"
+  data-base-url="{{ routes.product_recommendations_url }}"
+  data-product-id="{{ product.id }}"
+  data-section-id="{{ section.id }}"
+  data-intent="complementary"
+  data-limit="{{ block.settings.limit }}"
+  >
+  </div>
+{%- endif -%}
+</div>

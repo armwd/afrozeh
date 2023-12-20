@@ -1,0 +1,1130 @@
+<style>
+                 .custom-flow-wrap,
+                 .custom_size_option_addon{
+                     display: none;
+                 }
+
+
+                   .hdr-custom-size-opt {
+                     list-style-type: none;
+                     margin: 0;
+                     padding: 0;
+                     display: flex;
+                     justify-content: flex-start;
+                     flex-wrap: wrap;
+                     margin-bottom: 2rem;
+                 }
+                 .hdr-custom-size-opt li {
+                     float: left;
+                     margin: 0;
+                     width: max-content;
+                     height: 40px;
+                     position: relative;
+                 }
+                 .hdr-custom-size-opt input[type=radio] {
+                     opacity: .01;
+                     z-index: 100;
+                     cursor: pointer;
+                 }
+                 .hdr-custom-size-opt label, .hdr-custom-size-opt input {
+                     display: block;
+                     position: absolute;
+                     top: 0;
+                     left: 0;
+                     right: 0;
+                     bottom: 0;
+                 }
+                 .hdr-custom-size-opt label {
+                     cursor: pointer;
+                     font-family: Montserrat,sans-serif;
+                     font-weight: 600;
+                     letter-spacing: .1em;
+                     text-transform: uppercase;
+                     position: relative;
+                     display: inline-block;
+                     line-height: 1;
+                     padding: 9px 11px;
+                     margin: 3px 4px 7px 3px;
+                     font-size: .8125em;
+                     font-style: normal;
+                     background-color: #fff;
+                     box-shadow: 0 0 0 1px #e8e8e1;
+                     color: #222323;
+                 }
+                 p.radio-size-options,
+                 label.radio-size-options1,
+                 p.line-item-property__field.Additional-Information1 {
+                     width: 100%;
+                 }
+                 p.line-item-property__field.Additional-Information1 {
+                     margin-top: 15px;
+                 }
+                 .hdr-custom-size-opt input[type=radio]:checked+label, .Checked+label {
+                     background: #fff;
+                     box-shadow: 0 0 0 2px #000;
+                 }
+               .custom_size_option_addon_bottom,.custom_size_option_addon_shirt {
+                 display: flex;
+               }
+
+               .custom_size_option_addon input[type="text"] {
+                 width: 100%;
+                 height: 30px;
+               }
+
+               .custom_size_option_addon label.label {
+                 color: #000;
+                 font-weight:normal;
+                 font-size: 14px;
+                 display: inline-block;
+                 width: 100%;
+                 text-align: left;
+                 margin-bottom: 5px;
+                 margin-top: 5px;
+                 padding-left: 0;
+               }
+
+               .custom_size_option_addon{
+                 display: none;
+                 width: 100%;
+             /*     float: left; */
+                 padding-bottom: 20px;
+               }
+
+               .custom_size_option_addon_img {
+                 width: 50%;
+             /*     float: left; */
+                 position: relative;
+               }
+
+               .custom_size_option_addon_input {
+                 width: 50%;
+             /*     float: left; */
+                 display: block;
+                 padding: 0 0 0 10px;
+               }
+
+               .custom_size_option_addon_input .input-full{
+                 margin: 5px 0;
+                 border: 1px solid #464646;
+               }
+
+               .custom_size_option_addon span {
+                 padding-right: 15px;
+               }
+
+               #product-variants .swatch:nth-child(5) .header {
+                 width: 28% !Important;
+               }
+
+               .custom_size_option_addon_img span {
+                 padding: 0;
+                 font-size: 12px;
+                 position: absolute;
+               }
+
+               span[data-size-name="trouser_waist"] {
+                 top: 7%;
+                 left: 50%;
+               }
+
+               span[data-size-name="length"] {
+                 top: 49%;
+                 left: 12%;
+               }
+
+               span[data-size-name="bottom"] {
+                 bottom: 7%;
+                 right: 28%;
+               }
+
+               span[data-size-name="knee"] {
+                 top: 52%;
+                 right: 28%;
+               }
+
+               span[data-size-name="thigh"] {
+                 top: 33%;
+                 right: 28%;
+               }
+
+               span[data-size-name="hip"] {
+                 left: 50%;
+                 top: 15%;
+               }
+
+               span[data-size-name="knee_length"] {
+                 right: 9%;
+                 top: 30%;
+               }
+
+               span[data-size-name="shoulder"] {
+                 top: -1px;
+                 left: 54%;
+               }
+
+               span[data-size-name="chest"] {
+                 top: 14%;
+                 left: 54%;
+               }
+
+               span[data-size-name="waist"] {
+                 top: 26%;
+                 left: 54%;
+               }
+
+               span[data-size-name="shirt_bottom"] {
+                 bottom: 8%;
+                 left: 54%;
+
+               }
+
+               span[data-size-name="shirt_hip"] {
+                 left: 54%;
+                 top: 39%;
+               }
+
+               span[data-size-name="arm_hole"] {
+                 right: 31%;
+                 top: 10%;
+               }
+
+               span[data-size-name="sleeve_length"] {
+                 left: 9%;
+                 top: 15%;
+               }
+
+               span[data-size-name="wrist"] {
+                 left: 10%;
+                 top: 32%;
+               }
+
+               span[data-size-name="shirt_length"] {
+                 right: 9%;
+                 top: 44%;
+               }
+
+               span[data-size-name="lehnga_blouse_shoulder"] {
+                     top: -4px;
+                     left: 120px;
+              }
+
+              span[data-size-name="lehnga_blouse-length"] {
+                   top: 100px;
+                   right: 24px;
+              }
+
+              span[data-size-name="lehnga_blouse_chest"] {
+                 top: 68px;
+                 left: 37%;
+             }
+
+             span[data-size-name="lehnga_blouse_waist"] {
+               top: 160px;
+               left: 41%;
+           }
+
+             span[data-size-name="lehnga_blouse_sleeves-length"] {
+               top: 20px;
+             }
+
+           span[data-size-name="lehnga_blouse_arm-hole"] {
+             top: 50px;
+             left: 33px;
+           }
+
+           span[data-size-name="maxi_arm-hole"] {
+               top: 24px;
+               left: 126px;
+           }
+
+     span[data-size-name="maxi_chest"] {
+         top: 39px;
+         left: 80px;
+     }
+
+     span[data-size-name="maxi_shoulder"] {
+       top: 0;
+      }
+
+    span[data-size-name="maxi_sleeves-length"] {
+         top: 99px;
+     }
+
+     span[data-size-name="maxi_wrist"] {
+       top: 188px;
+    }
+
+      span[data-size-name="maxi_waist"] {
+          top: 20%;
+          left: 33%;
+      }
+
+    span[data-size-name="maxi_length"] {
+      top: 250px;
+      left: 68%;
+  }
+
+    span[data-size-name="saree_blouse_shoulder"] {
+      top: 0;
+      left: 43%;
+    }
+
+    span[data-size-name="saree_blouse-length"] {
+      top: 50%;
+      left: 82%;
+    }
+
+    span[data-size-name="saree_blouse_chest"] {
+      top: 33%;
+      left: 40%;
+    }
+
+    span[data-size-name="saree_blouse_waist"] {
+      top: 80%;
+      left: 41%;
+    }
+
+    span[data-size-name="saree_blouse_sleeves-length"] {
+      top: 25px;
+    }
+
+    span[data-size-name="saree_blouse_arm-hole"] {
+      top: 70px;
+      left: 60%;
+    }
+
+span[data-size-name="peplum_sharara_peplum_shoulder"] {
+    top: 16px;
+    left: 70px;
+}
+
+span[data-size-name="peplum_sharara_peplum_front-neck-depth"] {
+    top: 70px;
+    left: 158px;
+}
+
+span[data-size-name="peplum_sharara_peplum_back-neck-depth"] {
+    top: 25px;
+    left: 140px;
+}
+
+span[data-size-name="peplum_sharara-peplum-length"] {
+    top: 210px;
+    left: 88%;
+}
+
+span[data-size-name="peplum_sharara_peplum_chest"] {
+    top: 130px;
+    left: 40%;
+}
+
+span[data-size-name="peplum_sharara_peplum_waist"] {
+    top: 230px;
+    left: 40%;
+}
+
+span[data-size-name="peplum_sharara_peplum_sleeves-length"] {
+    top: 115px;
+    left: 6%;
+}
+
+span[data-size-name="peplum_sharara_peplum_arm-hole"] {
+    top: 90px;
+    left: 64.5%;
+}
+
+span[data-size-name="peplum_sharara_sharara_length"] {
+    top: 250px;
+    left: 82%;
+}
+
+span[data-size-name="peplum_sharara_sharara_waist"] {
+    top: 40px;
+    left: 40%;
+}
+  
+    .custom_size_option_addon_input input[type='number'] {
+       -moz-appearance:textfield;
+    }
+
+   .custom_size_option_addon_input input::-webkit-outer-spin-button,
+   .custom_size_option_addon_input input::-webkit-inner-spin-button {
+     -webkit-appearance: none;
+   }
+
+   @media (max-width: 380px) {
+     #product-variants .swatch:nth-child(5) .header {
+       width: 13% !important;
+     }
+     .custom_size_option_addon_img,.custom_size_option_addon_input {
+       width: 100%;
+       padding: 5px 0;
+     }
+   }
+</style>
+
+<div Class="custom-flow-wrap">
+  {% unless product.tags contains 'custom_flow' %}
+    <p
+      class="radio-size-options"
+      style="color: red;"
+    >
+      {% unless product.tags contains 'hide_text' %}
+        {% if product.tags contains "The Brides Edit '23" %}
+          Note: Full payment has to be made for stitched orders. The production timeline for bridal stitched orders is
+          35-45 working days.
+        {% else %}
+          Note: Full payment has to be made for stitched orders. Extra laces and tassles used in our outfits are only
+          for shoot purposes and will not be included in outfit when purchased
+        {% endif %}
+      {% endunless %}
+    </p>
+    <p class="line-item-property__field radio-size-options" style="margin-bottom: 0px;margin-top: 0px; display: block">
+      <label style="font-style: normal;">Size</label>
+      <ul class="hdr-custom-size-opt radio-size-options">
+        <li style="width: 50px;">
+          <input type="radio" id="XS" class="custom__size-radio--inputs" name="properties[Size]" value="XS">
+          <label for="XS">XS</label>
+        </li>
+        <li style="width: 40px;">
+          <input type="radio" id="S" class="custom__size-radio--inputs" name="properties[Size]" value="S">
+          <label for="S">S</label>
+        </li>
+        <li style="width: 42px;">
+          <input type="radio" id="M" class="custom__size-radio--inputs" name="properties[Size]" value="M">
+          <label for="M">M</label>
+        </li>
+        <li style="width: 39px;">
+          <input type="radio" id="L" class="custom__size-radio--inputs" name="properties[Size]" value="L">
+          <label for="L">L</label>
+        </li>
+
+        <li>
+          <input type="radio" id="XL" class="custom__size-radio--inputs" name="properties[Size]" value="XL">
+          <label for="XL">XL</label>
+        </li>
+
+        <li>
+          <input
+            type="radio"
+            id="Custom-Size"
+            class="custom__size-radio--inputs{% if product.tags contains "lehnga_maxi" or product.tags contains "saree_custom_size" or product.tags contains "peplum_sharara" %} has__lehga-maxi{% endif %}"
+            name="properties[Size]"
+            value="Custom Size"
+          >
+          <label for="Custom-Size">Custom Size</label>
+        </li>
+      </ul>
+    </p>
+  {% endunless %}
+  {% if product.tags contains 'rtw-custom-flow' %}
+    <p class="line-item-property__field radio-size-options" style="margin-bottom: 0px;margin-top: 0px; display: block">
+      <label style="font-style: normal;">Size</label>
+      <ul class="hdr-custom-size-opt radio-size-options">
+        <li style="width: 40px;">
+          <input type="radio" id="S" class="custom__size-radio--inputs" name="properties[Size]" value="S" checked>
+          <label for="S">S</label>
+        </li>
+        <li style="width: 42px;">
+          <input type="radio" id="M" class="custom__size-radio--inputs" name="properties[Size]" value="M">
+          <label for="M">M</label>
+        </li>
+        <li style="width: 39px;">
+          <input type="radio" id="L" class="custom__size-radio--inputs" name="properties[Size]" value="L">
+          <label for="L">L</label>
+        </li>
+      </ul>
+    </p>
+  {% endif %}
+  <br>
+  {% if product.tags contains 'lehnga_maxi' or product.tags contains 'peplum_sharara' %}
+    <label class="radio-size-options" style="margin-top: 20px; font-style: normal;">Style</label>
+    <ul class="hdr-custom-size-opt radio-size-options hdr-custom-style-opt">
+      {% if product.tags contains "lehnga" %}
+        <li class="Lehnga">
+          <input type="radio" class="lehnga-maxi__style" id="Lehnga" name="properties[Style]" value="Lehnga">
+          <label for="Lehnga">Lehnga</label>
+        </li>
+      {% endif %}
+      {% if product.tags contains "maxi" %}
+        <li class="maxi">
+          <input type="radio" class="lehnga-maxi__style" id="maxi" name="properties[Style]" value="Maxi">
+          <label for="maxi">Maxi</label>
+        </li>
+      {% endif %}
+      {% if product.tags contains "peplum_sharara" %}
+        <li class="maxi">
+          <input type="radio" class="lehnga-maxi__style" id="sharara" name="properties[Style]" value="Sharara">
+          <label for="sharara">Sharara</label>
+        </li>
+      {% endif %}
+    </ul>
+        
+    
+  {% elsif product.tags contains 'saree_custom_size' %}
+    <label class="radio-size-options" style="margin-top: 20px; font-style: normal;">Style</label>
+    <ul class="hdr-custom-size-opt radio-size-options hdr-custom-style-opt">
+      <li class="saree">
+        <input type="radio" checked class="lehnga-maxi__style" id="saree" name="properties[Style]" value="Saree">
+        <label for="saree">Saree</label>
+      </li>
+    </ul>
+  {% endif %}
+  <!-- second code fields -->
+  {% unless product.tags contains 'custom_flow' %}
+    <p class="line-item-property__field Additional-Information">
+      <div class="cstm-size-diagram-container">
+        <div class="custom_size_option_addon">
+          <h4>NOTE</h4>
+          <ul class="cst-policy">
+            <li>Please provide your final stitching measurements below (not body measurements).</li>
+            <li>
+              You can provide the measurements that require alterations as rest of the measurements will be chosen from
+              your nearest size.
+            </li>
+            <li>
+              Changes in custom stitched orders can only be made within 3 days of order placement and will require a
+              confirmation from our end.
+            </li>
+            <li>For choli lengths length up till 17inches is possible</li>
+          </ul>
+          <div class="cst-main">
+            <p id="nearestSizeNote">Please select one option from nearest size*</p>
+            <span><b>*</b>Choose your nearest size: </span>
+            <ul class="cst-policy-sz" style="display: flex; list-style: none;">
+              <li style="margin: 5px;">
+                <input type="radio" name="properties[custom-stitch-size]" class="inner-size-input" id="s" value="s">
+                <label for="s">S</label>
+              </li>
+              <li style="margin: 5px;">
+                <input type="radio" name="properties[custom-stitch-size]" class="inner-size-input" id="m" value="m">
+                <label for="m">M</label>
+              </li>
+              <li style="margin: 5px;">
+                <input type="radio" name="properties[custom-stitch-size]" class="inner-size-input" id="l" value="l">
+                <label for="l">L</label>
+              </li>
+            </ul>
+          </div>
+
+          <div class="custom-size-diagram-wrap">
+            <div class="custom_size_option_addon_shirt">
+              <div class="custom_size_option_addon_img ">
+                {% if product.tags contains 'lehnga_maxi' or product.tags contains "peplum_sharara" %}
+                  {% if product.tags contains "lehnga" %}
+                  <img
+                    class="hidden lehnga__image-size"
+                    src="https://cdn.shopify.com/s/files/1/0052/2030/2897/files/lehnga-choli.png?v=1698235353"
+                    width="100%"
+                    height="100%"
+                  >
+                  {% endif %}
+                  {% if product.tags contains "maxi" %}
+                  <img
+                    class="hidden maxi__image-size"
+                    src="https://cdn.shopify.com/s/files/1/0052/2030/2897/files/maxi.jpg?v=1698219158"
+                    width="100%"
+                    height="100%"
+                  >
+                  {% endif %}
+                  {% if product.tags contains "peplum_sharara" %}
+                    <img
+                      class="hidden peplum_sharara__image-size"
+                      src="https://cdn.shopify.com/s/files/1/0052/2030/2897/files/peplum-01_1.png?v=1702042311"
+                      width="100%"
+                      height="100%"
+                    >
+                  {% endif %}
+                  {% if product.tags contains "maxi" %}
+                    <span data-size-name="maxi_shoulder" class="maxi-output"></span>
+                    <span data-size-name="maxi_front-neck-depth" class="maxi-output"></span>
+                    <span data-size-name="maxi_back-neck-depth" class="maxi-output"></span>
+                    <span data-size-name="maxi_arm-hole" class="maxi-output"></span>
+                    <span data-size-name="maxi_chest" class="maxi-output"></span>
+                    <span data-size-name="maxi_sleeves-length" class="maxi-output"></span>
+                    <span data-size-name="maxi_wrist" class="maxi-output"></span>
+                    <span data-size-name="maxi_waist" class="maxi-output"></span>
+                    <span data-size-name="maxi_length" class="maxi-output"></span>
+                  {% endif %}
+                  {% if product.tags contains "lehnga" %}
+                    <span data-size-name="lehnga_blouse_shoulder" class="lehnga-output"></span>
+                    <span data-size-name="lehnga_front-neck-depth" class="lehnga-output"></span>
+                    <span data-size-name="lehnga_back-neck-depth" class="lehnga-output"></span>
+                    <span data-size-name="lehnga_blouse-length" class="lehnga-output"></span>
+                    <span data-size-name="lehnga_blouse_chest" class="lehnga-output"></span>
+                    <span data-size-name="lehnga_blouse_waist" class="lehnga-output"></span>
+                    <span data-size-name="lehnga_blouse_sleeves-length" class="lehnga-output"></span>
+                    <span data-size-name="lehnga_blouse_arm-hole" class="lehnga-output"></span>
+                    <span data-size-name="lehnga_blouse_arm-hole" class="lehnga-output"></span>
+                  {% endif %}
+                  {% if product.tags contains "peplum_sharara" %}
+                    <span data-size-name="peplum_sharara_peplum_shoulder" class="peplum_sharara-output"></span>
+                    <span data-size-name="peplum_sharara_peplum_front-neck-depth" class="lehnga-output"></span>
+                    <span data-size-name="peplum_sharara_peplum_back-neck-depth" class="lehnga-output"></span>
+                    <span data-size-name="peplum_sharara-peplum-length" class="peplum_sharara-output"></span>
+                    <span data-size-name="peplum_sharara_peplum_chest" class="peplum_sharara-output"></span>
+                    <span data-size-name="peplum_sharara_peplum_waist" class="peplum_sharara-output"></span>
+                    <span data-size-name="peplum_sharara_peplum_sleeves-length" class="peplum_sharara-output"></span>
+                    <span data-size-name="peplum_sharara_peplum_arm-hole" class="peplum_sharara-output"></span>
+                  {% endif %}
+                {% elsif product.tags contains 'saree_custom_size' %}
+                  <img
+                    class="hidden saree__image-size"
+                    src="https://cdn.shopify.com/s/files/1/0052/2030/2897/files/lehnga-choli.png?v=1698235353"
+                    width="100%"
+                    height="100%"
+                  >
+                  <span data-size-name="saree_blouse_shoulder" class="saree-output"></span>
+                  <span data-size-name="saree_blouse-length" class="saree-output"></span>
+                  <span data-size-name="saree_blouse_chest" class="saree-output"></span>
+                  <span data-size-name="saree_blouse_waist" class="saree-output"></span>
+                  <span data-size-name="saree_blouse_sleeves-length" class="saree-output"></span>
+                  <span data-size-name="saree_blouse_arm-hole" class="saree-output"></span>
+                  <span data-size-name="saree_blouse_arm-hole" class="saree-output"></span>
+                {% else %}
+                  <img
+                    src="//cdn.shopify.com/s/files/1/0011/0277/4316/files/Shirt-Outline.jpg?4503"
+                    width="100%"
+                    height="100%"
+                  >
+                  <span data-size-name="shoulder"></span>
+                  <span data-size-name="chest"></span>
+                  <span data-size-name="waist"></span>
+                  <span data-size-name="shirt_hip"></span>
+                  <span data-size-name="shirt_bottom"></span>
+                  <span data-size-name="arm_hole"></span>
+                  <span data-size-name="sleeve_length"></span>
+                  <span data-size-name="wrist"></span>
+                  <span data-size-name="shirt_length"></span>
+                {% endif %}
+              </div>
+              <div class="custom_size_option_addon_input">
+                {% if product.tags contains 'lehnga_maxi' or product.tags contains "peplum_sharara" %}
+                  {% if product.tags contains 'maxi' %}
+                  <input
+                    required
+                    data-name="maxi_shoulder"
+                    type="text"
+                    value=""
+                    placeholder="Shoulder"
+                    class="input-full empty maxi-inputs"
+                    name="properties[maxi_shoulder]"
+                  >
+                  {% if product.tags contains "The Brides Edit '23" %}
+                  <input
+                    required
+                    data-name="maxi_front-neck-depth"
+                    type="text"
+                    value=""
+                    placeholder="Front Neck Depth"
+                    class="input-full empty maxi-inputs"
+                    name="properties[maxi_front-neck-depth]"
+                  >
+                  <input
+                    required
+                    data-name="maxi_back-neck-depth"
+                    type="text"
+                    value=""
+                    placeholder="Back Neck Depth"
+                    class="input-full empty maxi-inputs"
+                    name="properties[maxi_back-neck-depth]"
+                  >
+                  {% endif %}
+                  <input
+                    required
+                    data-name="maxi_arm-hole"
+                    type="text"
+                    value=""
+                    placeholder="Arm Hole"
+                    class="input-full empty maxi-inputs"
+                    name="properties[maxi_arm-hole]"
+                  >
+                  <input
+                    required
+                    data-name="maxi_chest"
+                    type="text"
+                    value=""
+                    placeholder="Chest"
+                    class="input-full empty maxi-inputs"
+                    name="properties[maxi_chest]"
+                  >
+                  <input
+                    required
+                    data-name="maxi_sleeves-length"
+                    type="text"
+                    value=""
+                    placeholder="Sleeves Length"
+                    class="input-full empty maxi-inputs"
+                    name="properties[maxi_sleeves-length]"
+                  >
+                  <input
+                    required
+                    data-name="maxi_wrist"
+                    type="text"
+                    value=""
+                    placeholder="Wrist"
+                    class="input-full empty maxi-inputs"
+                    name="properties[maxi_wrist]"
+                  >
+                  <input
+                    required
+                    data-name="maxi_waist"
+                    type="text"
+                    value=""
+                    placeholder="Waist"
+                    class="input-full empty maxi-inputs"
+                    name="properties[maxi_waist]"
+                  >
+                  <input
+                    required
+                    data-name="maxi_length"
+                    type="text"
+                    value=""
+                    placeholder="Maxi Length"
+                    class="input-full empty maxi-inputs"
+                    name="properties[maxi_length]"
+                  >
+                  {% endif %}
+                  {% if product.tags contains 'lehnga' %}
+                  <input
+                    required
+                    data-name="lehnga_blouse_shoulder"
+                    type="text"
+                    value=""
+                    placeholder="Shoulder"
+                    class="input-full empty lehnga-inputs"
+                    name="properties[lehnga_blouse_shoulder]"
+                  >
+                  {% if product.tags contains "The Brides Edit '23" %}
+                  <input
+                    required
+                    data-name="lehnga_front-neck-depth"
+                    type="text"
+                    value=""
+                    placeholder="Front Neck Depth"
+                    class="input-full empty lehnga-inputs"
+                    name="properties[lehnga_front-neck-depth]"
+                  >
+                  <input
+                    required
+                    data-name="lehnga_back-neck-depth"
+                    type="text"
+                    value=""
+                    placeholder="Back Neck Depth"
+                    class="input-full empty lehnga-inputs"
+                    name="properties[lehnga_back-neck-depth]"
+                  >
+                  {% endif %}
+                  <input
+                    required
+                    data-name="lehnga_blouse-length"
+                    type="text"
+                    value=""
+                    placeholder="Blouse Length"
+                    class="input-full empty lehnga-inputs"
+                    name="properties[lehnga_blouse-length]"
+                  >
+                  <input
+                    required
+                    data-name="lehnga_blouse_chest"
+                    type="text"
+                    value=""
+                    placeholder="Chest"
+                    class="input-full empty lehnga-inputs"
+                    name="properties[lehnga_blouse_chest]"
+                  >
+                  <input
+                    required
+                    data-name="lehnga_blouse_waist"
+                    type="text"
+                    value=""
+                    placeholder="Blouse Waist"
+                    class="input-full empty lehnga-inputs"
+                    name="properties[lehnga_blouse_waist]"
+                  >
+                  <input
+                    required
+                    data-name="lehnga_blouse_sleeves-length"
+                    type="text"
+                    value=""
+                    placeholder="Sleeves Length"
+                    class="input-full empty lehnga-inputs"
+                    name="properties[lehnga_blouse_sleeves-length]"
+                  >
+                  <input
+                    required
+                    data-name="lehnga_blouse_arm-hole"
+                    type="text"
+                    value=""
+                    placeholder="Arm Hole"
+                    class="input-full empty lehnga-inputs"
+                    name="properties[lehnga_blouse_arm-hole]"
+                  >
+                  {% endif %}
+                  {% if product.tags contains 'peplum_sharara' %}
+                  <input
+                    required
+                    data-name="peplum_sharara_peplum_shoulder"
+                    type="text"
+                    value=""
+                    placeholder="Peplum Shoulder"
+                    class="input-full empty peplum_sharara-inputs"
+                    name="properties[peplum_sharara_peplum_shoulder]"
+                  >
+                  <input
+                    required
+                    data-name="peplum_sharara_peplum_front-neck-depth"
+                    type="text"
+                    value=""
+                    placeholder="Peplum Front Neck Depth"
+                    class="input-full empty peplum_sharara-inputs"
+                    name="properties[peplum_sharara_peplum_front-neck-depth]"
+                  >
+                  <input
+                    required
+                    data-name="peplum_sharara_peplum_back-neck-depth"
+                    type="text"
+                    value=""
+                    placeholder="Peplum Back Neck Depth"
+                    class="input-full empty peplum_sharara-inputs"
+                    name="properties[peplum_sharara_peplum_back-neck-depth]"
+                  >
+                  <input
+                    required
+                    data-name="peplum_sharara-peplum-length"
+                    type="text"
+                    value=""
+                    placeholder="Peplum Length"
+                    class="input-full empty peplum_sharara-inputs"
+                    name="properties[peplum_sharara-peplum-length]"
+                  >
+                  <input
+                    required
+                    data-name="peplum_sharara_peplum_chest"
+                    type="text"
+                    value=""
+                    placeholder="Peplum Chest"
+                    class="input-full empty peplum_sharara-inputs"
+                    name="properties[peplum_sharara_peplum_chest]"
+                  >
+                  <input
+                    required
+                    data-name="peplum_sharara_peplum_waist"
+                    type="text"
+                    value=""
+                    placeholder="Peplum Waist"
+                    class="input-full empty peplum_sharara-inputs"
+                    name="properties[peplum_sharara_peplum_waist]"
+                  >
+                  <input
+                    required
+                    data-name="peplum_sharara_peplum_sleeves-length"
+                    type="text"
+                    value=""
+                    placeholder="Peplum Sleeves Length"
+                    class="input-full empty peplum_sharara-inputs"
+                    name="properties[peplum_sharara_peplum_sleeves-length]"
+                  >
+                  <input
+                    required
+                    data-name="peplum_sharara_peplum_arm-hole"
+                    type="text"
+                    value=""
+                    placeholder="Peplum Arm Hole"
+                    class="input-full empty peplum_sharara-inputs"
+                    name="properties[peplum_sharara_peplum_arm-hole]"
+                  >
+                  {% endif %}                  
+                {% elsif product.tags contains 'saree_custom_size' %}
+                  <input
+                    required
+                    data-name="saree_blouse_shoulder"
+                    type="text"
+                    value=""
+                    placeholder="Shoulder"
+                    class="input-full empty saree-inputs"
+                    name="properties[saree_blouse_shoulder]"
+                  >
+                  <input
+                    required
+                    data-name="saree_blouse-length"
+                    type="text"
+                    value=""
+                    placeholder="Blouse Length"
+                    class="input-full empty saree-inputs"
+                    name="properties[saree_blouse-length]"
+                  >
+                  <input
+                    required
+                    data-name="saree_blouse_chest"
+                    type="text"
+                    value=""
+                    placeholder="Chest"
+                    class="input-full empty saree-inputs"
+                    name="properties[saree_blouse_chest]"
+                  >
+                  <input
+                    required
+                    data-name="saree_blouse_waist"
+                    type="text"
+                    value=""
+                    placeholder="Blouse Waist"
+                    class="input-full empty saree-inputs"
+                    name="properties[saree_blouse_waist]"
+                  >
+                  <input
+                    required
+                    data-name="saree_blouse_sleeves-length"
+                    type="text"
+                    value=""
+                    placeholder="Sleeves Length"
+                    class="input-full empty saree-inputs"
+                    name="properties[saree_blouse_sleeves-length]"
+                  >
+                  <input
+                    required
+                    data-name="saree_blouse_arm-hole"
+                    type="text"
+                    value=""
+                    placeholder="Arm Hole"
+                    class="input-full empty saree-inputs"
+                    name="properties[saree_blouse_arm-hole]"
+                  >
+                {% else %}
+                  <input
+                    required
+                    data-name="shirt_length"
+                    type="text"
+                    value=""
+                    placeholder="Shirt length"
+                    class="input-full empty"
+                    name="properties[shirt_length]"
+                  >
+                  <input
+                    required
+                    data-name="shoulder"
+                    type="text"
+                    value=""
+                    placeholder="Shoulder"
+                    name="properties[shirt_sholuder]"
+                    class="input-full empty"
+                  >
+                  <input
+                    required
+                    data-name="sleeve_length"
+                    type="text"
+                    value=""
+                    placeholder="Sleeve Length"
+                    class="input-full empty"
+                    name="properties[shirt_sleeve_length]"
+                  >
+                  <input
+                    required
+                    data-name="wrist"
+                    type="text"
+                    value=""
+                    placeholder="Wrist"
+                    class="input-full empty"
+                    name="properties[shirt_wrist]"
+                  >
+                  <input
+                    required
+                    data-name="chest"
+                    type="text"
+                    value=""
+                    placeholder="Chest"
+                    class="input-full empty"
+                    name="properties[shirt_chest]"
+                  >
+                  <input
+                    required
+                    data-name="waist"
+                    type="text"
+                    value=""
+                    placeholder="Waist"
+                    class="input-full empty"
+                    name="properties[shirt_waist]"
+                  >
+                  <input
+                    required
+                    data-name="shirt_hip"
+                    type="text"
+                    value=""
+                    placeholder="Hip"
+                    class="input-full empty"
+                    name="properties[shirt_hip]"
+                  >
+                  <input
+                    required
+                    data-name="shirt_bottom"
+                    type="text"
+                    value=""
+                    placeholder="Bottom"
+                    class="input-full empty"
+                    name="properties[shirt_bottom]"
+                  >
+                  <input
+                    required
+                    data-name="arm_hole"
+                    type="text"
+                    value=""
+                    placeholder="Arm Hole"
+                    class="input-full empty"
+                    name="properties[shirt_arm_hole]"
+                  >
+                {% endif %}
+              </div>
+            </div>
+            <div class="custom_size_option_addon_bottom">
+              <div class="custom_size_option_addon_img">
+                {% if product.tags contains 'lehnga_maxi' or product.tags contains 'peplum_sharara' %}
+                  {% if product.tags contains 'lehnga' %}
+                  <img
+                    class="hidden lehnga__image-size"
+                    src="https://cdn.shopify.com/s/files/1/0052/2030/2897/files/lehnga.png?v=1698235353"
+                    width="100%"
+                    height="100%"
+                  >
+                  <span data-size-name="lehnga_length"></span>
+                  <span data-size-name="lehnga_waist"></span>
+                  {% endif %}
+                  {% if product.tags contains 'peplum_sharara' %}
+                  <img
+                    class="hidden peplum_sharara__image-size"
+                    src="https://cdn.shopify.com/s/files/1/0052/2030/2897/files/sharara-01_1.png?v=1702042311"
+                    width="100%"
+                    height="100%"
+                  >
+                  <span data-size-name="peplum_sharara_sharara_length"></span>
+                  <span data-size-name="peplum_sharara_sharara_waist"></span>
+                  {% endif %}
+                {% elsif product.tags contains 'saree_custom_size' %}
+
+                {% else %}
+                  <img src="//cdn.shopify.com/s/files/1/0011/0277/4316/files/t1.jpeg?4503" width="100%" height="100%">
+                  <span data-size-name="length"></span>
+                  <span data-size-name="hip"></span>
+                  <span data-size-name="thigh"></span>
+                  <span data-size-name="bottom"></span>
+                  <span data-size-name="trouser_waist"></span>
+                {% endif %}
+              </div>
+              <div class="custom_size_option_addon_input">
+                {% if product.tags contains 'lehnga_maxi' or product.tags contains 'peplum_sharara' %}
+                  {% if product.tags contains 'lehnga' %}
+                  <input
+                    required
+                    data-name="lehnga_length"
+                    type="text"
+                    value=""
+                    placeholder="Lehnga Length"
+                    name="properties[lehnga_length]"
+                    class="input-full empty lehnga-inputs"
+                  >
+                  <input
+                    required
+                    data-name="lehnga_waist"
+                    type="text"
+                    value=""
+                    placeholder="Lehnga Waist"
+                    name="properties[lehnga_waist]"
+                    class="input-full empty lehnga-inputs"
+                  >
+                  {% endif %}
+                  {% if product.tags contains 'peplum_sharara' %}
+                  <input
+                    required
+                    data-name="peplum_sharara_sharara_length"
+                    type="text"
+                    value=""
+                    placeholder="Sharara Length"
+                    name="properties[sharara_length]"
+                    class="input-full empty peplum_sharara-inputs"
+                  >
+                  <input
+                    required
+                    data-name="peplum_sharara_sharara_waist"
+                    type="text"
+                    value=""
+                    placeholder="Sharara Waist"
+                    name="properties[sharara_waist]"
+                    class="input-full empty peplum_sharara-inputs"
+                  >  
+                  {% endif %}
+                {% elsif product.tags contains 'saree_custom_size' %}
+                  <input
+                    required
+                    data-name="saree_length"
+                    type="text"
+                    value=""
+                    placeholder="Saree Length"
+                    name="properties[saree_length]"
+                    class="input-full empty saree-inputs"
+                  >
+                  <input
+                    required
+                    data-name="saree_waist"
+                    type="text"
+                    value=""
+                    placeholder="Saree Waist"
+                    name="properties[saree_waist]"
+                    class="input-full empty saree-inputs"
+                  >
+                {% else %}
+                  <input
+                    required
+                    data-name="length"
+                    type="text"
+                    value=""
+                    placeholder="Length"
+                    name="properties[trouser_length]"
+                    class="input-full empty"
+                  >
+                  <input
+                    required
+                    data-name="trouser_waist"
+                    type="text"
+                    value=""
+                    placeholder="Trouser Waist"
+                    name="properties[trouser_waist]"
+                    class="input-full empty"
+                  >
+                  <input
+                    required
+                    data-name="hip"
+                    type="text"
+                    value=""
+                    placeholder="Hip"
+                    class="input-full empty"
+                    name="properties[trouser_hip]"
+                  >
+                  <input
+                    required
+                    data-name="thigh"
+                    type="text"
+                    value=""
+                    placeholder="Thigh"
+                    class="input-full empty"
+                    name="properties[trouser_thigh]"
+                  >
+                  <input
+                    required
+                    data-name="bottom"
+                    type="text"
+                    value=""
+                    placeholder="Bottom"
+                    class="input-full empty"
+                    name="properties[trouser_bottom]"
+                  >
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </p>
+  {% endunless %}
+</div>
+
+<script></script>

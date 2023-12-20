@@ -1,0 +1,151 @@
+{%- liquid
+
+  assign section_padding = ''
+  if section.settings.section_padding == 'top'
+    assign section_padding = 'pb0'
+  elsif section.settings.section_padding == 'bottom'
+    assign section_padding = 'mt0'
+  elsif section.settings.section_padding == 'none'
+    assign section_padding = 'mt0 pb0'
+  endif
+
+-%}
+
+<section class="global__section logo__list-section {{ section_padding }}" data-section-id="{{ section.id }}" data-aos="fade">
+  {% if section.settings.full_width %}
+  <div class="gridlock-fluid"><div class="row">
+  {% endif %}
+
+    {% if section.settings.heading != blank %}
+    <div class="row grid__wrapper">
+      <div class="span-12 auto">
+        <h2 class="section-heading mb0">
+          {{ section.settings.heading | escape }}
+        </h2>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="row grid__wrapper logo__list-wrapper section-{{ section.id }}">
+      {% for block in section.blocks %}
+        <div class="logo__list-image">
+          {% if block.settings.link != blank %}<a href="{{ block.settings.link }}">{% endif %}
+          {% if block.settings.image != blank %}
+            {%
+              render 'basic-responsive-image',
+              type: block.settings.image,
+              width: 800
+            %}
+          {% else %}
+            <div class="onboard">
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {% endif %}
+          {% if block.settings.link != blank %}</a>{% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    {% assign ipr = section.settings.images_per_row %}
+    <style>
+      .logo__list-wrapper.section-{{ section.id }} {
+        grid-template-columns: repeat({{ ipr }}, 1fr);
+      }
+      @media screen and (max-width: 740px) {
+        .logo__list-wrapper.section-{{ section.id }} {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+    </style>
+
+  {% if section.settings.full_width %}</div></div>{% endif %}
+</section>
+{% schema %}
+{
+  "name": "Logo list",
+  "settings": [{
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Enable full width",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "section_padding",
+      "label": "Section spacing",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        },
+        {
+          "value": "both",
+          "label": "Both"
+        },
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ],
+      "default": "both"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Logo list"
+    },
+    {
+      "type": "range",
+      "id": "images_per_row",
+      "label": "Images per row",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "default": 5
+    }
+  ],
+  "blocks": [{
+    "type": "image",
+    "name": "Image",
+    "settings": [{
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "url",
+        "id": "link",
+        "label": "Link",
+        "info": "Optional"
+      }
+    ]
+  }],
+  "presets": [{
+    "name": "Logo list",
+    "blocks": [{
+        "type": "image"
+      },
+      {
+        "type": "image"
+      },
+      {
+        "type": "image"
+      },
+      {
+        "type": "image"
+      },
+      {
+        "type": "image"
+      }
+    ]
+  }],
+  "enabled_on": {
+    "templates": ["404", "article", "blog", "cart", "collection", "list-collections", "index", "page", "product", "search"],
+    "groups": ["footer"]
+  }
+}
+{% endschema %}
