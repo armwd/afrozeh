@@ -73,9 +73,11 @@
         <span class="store-availabilities-modal__product-information">
           <h2 class="store-availabilities-modal__product-title" data-store-availability-modal-product-title>
           </h2>
-          <p class="store-availabilities-modal__variant-title store-availability-small-text">
-            {{ product_variant.title }}
-          </p>
+          {% unless product_variant.title == 'Default Title' %}
+            <p class="store-availabilities-modal__variant-title store-availability-small-text">
+              {{ product_variant.title }}
+            </p>
+            {% endunless %}
         </span>
       </div>
       <div class="store-availabilities-list">

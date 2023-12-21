@@ -88,7 +88,7 @@
                 </span>
             </button>
 
-            {%- if section.settings.video_link != blank and section.settings.video_link.type == 'youtube' -%}
+            {%- if section.settings.video_link != blank and section.settings.video_link.type == 'youtube'-%}
               <div id="Video-{{ section.id }}"
                   class="video{% if section.settings.style == 'background' %} video--background{% endif %}
                   video--{{ section.settings.style }}"
@@ -117,10 +117,20 @@
               </div>
             {%- else -%}
               <div class="video__image js" data-image-loading-animation>
+              {% liquid
+                assign loading = 'lazy'
+                assign fetch_priority = 'auto'
+                if section.index == 1
+                  assign loading = 'eager'
+                  assign fetch_priority = 'high'
+                endif
+               %}
               {%
                 render 'basic-responsive-image',
                 type: section.settings.image,
-                width: 2400
+                width: 2400,
+                loading: loading,
+                fetchpriority: fetch_priority
               %}
               </div>
             {%- endif -%}
@@ -212,7 +222,7 @@
               <span class="icon__fallback-text">{{ 'general.video.resume' | t: heading: '[heading]' }}</span>
             </span>
           </button>
-  {% endif %}
+{% endif %}
         </div>
 
     </div>
@@ -268,7 +278,7 @@
       ],
       "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
     },
-    {
+{
       "type": "video",
       "id": "video",
       "label": "Video link"
@@ -371,6 +381,9 @@
   }],
   "enabled_on": {
     "templates": ["404", "article", "blog", "cart", "collection", "list-collections", "index", "page", "product", "search"]
+  },
+  "disabled_on": {
+    "groups": ["header", "footer"]
   }
 }
 {% endschema %}

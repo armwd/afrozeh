@@ -47,6 +47,7 @@
     class="before-after_section global__section image__withText-section section-{{ section.id }} padded--section {{ section_padding }}" 
     data-section-id="{{ section.id }}"
     data-section-type="before-after"
+    data-aos="fade"
 >
   {% if full_width %}
     <div class="gridlock-fluid">
@@ -83,6 +84,13 @@
                 assign has_caption = true
               endif
 
+              assign loading = 'lazy'
+              assign fetch_priority = 'auto'
+              if section.index == 1
+                assign loading = 'eager'
+                assign fetch_priority = 'high'
+              endif
+
             %}
 
             {% if forloop.first %}
@@ -94,7 +102,9 @@
                       loading: 'lazy',
                       sm_render: sm_render,
                       md_render: md_render,
-                      lg_render: lg_render
+                      lg_render: lg_render,
+                      loading: loading,
+                      fetchpriority: fetch_priority
                     %}
                   {% else %}
                     <div class="onboard before--image_placeholder">
@@ -128,7 +138,9 @@
                       loading: 'lazy',
                       sm_render: sm_render,
                       md_render: md_render,
-                      lg_render: lg_render
+                      lg_render: lg_render,
+                      loading: loading,
+                      fetchpriority: fetch_priority
                     %}
                   {% else %}
                     <div class="onboard after--image_placeholder">
@@ -374,6 +386,9 @@
   ],
   "enabled_on": {
     "templates": ["404", "article", "blog", "cart", "collection", "list-collections", "index", "page", "product", "search", "customers/account"]
+  },
+  "disabled_on": {
+    "groups": ["header", "footer"]
   }
 }
 {% endschema %}

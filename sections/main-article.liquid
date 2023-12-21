@@ -7,7 +7,7 @@
 
 <section data-section-id="{{ section.id }}" class="article-template global__section row grid__wrapper">
   {% paginate article.comments by 10 %}
-    <div class="blog-container span-12 auto grid__wrapper edge">
+    <div class="{% if section.blocks.size > 0 %}span-12 auto blog-container grid__wrapper edge{% else %}span-10 push-1{% endif %}">
       <div id="article-body">
         {% if article.tags.size > 0 and section.settings.article_tags %}
           <ul class="article-tags">
@@ -38,10 +38,18 @@
 
         {% if article.image and section.settings.show_article_image %}
           <div class="article-image">
+            {% liquid
+              if section.index == 1
+                assign loading = 'eager'
+                assign fetch_priority = 'high'
+              endif
+             %}
             {%-
               render 'basic-responsive-image',
               type: article.image,
-              width: 800
+              width: 800,
+              loading: loading,
+              fetchpriority: fetch_priority
             -%}
           </div>
         {% endif %}
@@ -160,6 +168,9 @@
       </div>
 
       {% if section.blocks.size > 0 %}
+      {% comment %}
+        {% render 'blog-sidebar', block: block %}
+      {% endcomment %}
         <div id="blog-sidebar" data-aos="fade">
           {% for block in section.blocks %}
             <div class="blog-sidebar-block">
@@ -361,10 +372,11 @@
       "content": "Sidebar settings"
     },
     {
-      "type": "select",
-      "id": "sidebar_text_align",
-      "label": "Text alignment",
-      "options": [{
+       "type": "select",
+       "id": "sidebar_text_align",
+       "label": "Text alignment",
+       "default": "center",
+       "options": [{
           "value": "left",
           "label": "Left"
         },

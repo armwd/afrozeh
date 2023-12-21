@@ -42,6 +42,11 @@
   assign desktop_height = section.settings.desktop_height
   assign mobile_height = section.settings.mobile_height
 
+  assign show_animation = false
+  if section.settings.show_animation
+    assign show_animation = true
+  endif
+
 -%}
 
 {% style %}
@@ -102,9 +107,9 @@ data-aos="fade">
   {% unless full_width %}
   <div class="grid__wrapper row">
   {% endunless %}
-    <div class="slideshow flickity__section js-slideshow{% if fixed_height %} is-fixed_height{% elsif full_height %} is-full_height{% endif %} span-12 auto"
+    <div class="slideshow flickity__section js-slideshow{% if fixed_height %} is-fixed_height{% elsif full_height %} is-full_height{% endif %} span-12 auto show--animation_{{ show_animation }}"
       id="slideshow--{{ section.id }}"
-      data-flickity='{{ slideshow_config }}'>
+      data-flickity='{{ slideshow_config }}' data-enable-stop-pause-on-mobile="{{ section.settings.enable_stop_pause_on_mobile }}">
 
       {% for block in section.blocks %}
 
@@ -179,13 +184,26 @@ data-aos="fade">
           <div id="slide--{{ section.id }}-slide-{{ forloop.index0 }}" class="slide--{{ block.id }} slideshow__slide{% if block.settings.image == blank %} slideshow__slide-onboard{% endif %}" data-block-id="{{ block.id }}" data-slider-index="{{ forloop.index0 }}" data-sizes="auto" {{ block.shopify_attributes }}>
           {% if image_is_link %}<a class="slide__image-link" href="{{ link }}">{% endif %}
             <div class="js-slideshow-slide slideshow__slide-image">
+              {% liquid
+                # Determine fetch priority for LCP
+                assign loading = 'lazy'
+                assign fetch_priority = 'auto'
+                if section.index == 1 and forloop.first
+                  assign loading = 'eager'
+                  assign fetch_priority = 'high'
+                endif
+                if forloop.first
+                  assign loading = 'eager'
+                endif
+               %}
               {% if has_image %}
                 {%
                   render 'basic-responsive-image',
                   type: block.settings.image,
                   width: 2400,
                   class: mobile_class,
-                  loading: 'eager'
+                  loading: 'eager',
+                  fetchpriority: fetch_priority
                 %}
               {% else %}
                 {% capture current %}{% cycle 1, 2 %}{% endcapture %}
@@ -198,7 +216,8 @@ data-aos="fade">
                   type: block.settings.mobile_image,
                   width: 2400,
                   class: 'md-hide desktop-hide',
-                  loading: 'eager'
+                  loading: 'eager',
+                  fetchpriority: fetch_priority
                 %}
               {% endif %}
             </div>
@@ -470,12 +489,12 @@ data-aos="fade">
     {
        "type": "header",
        "content": "Appearance"
-     },
-      {
+    },
+    {
         "type": "text",
         "id": "custom_class",
         "label": "Create Custom Class"
-      },
+     },
       {
         "type": "checkbox",
         "id": "full_width",
@@ -547,6 +566,13 @@ data-aos="fade">
          "content": "Slide options"
        },
        {
+        "type": "checkbox",
+        "id": "show_animation",
+        "label": "Animate slide content",
+        "info":"Add animation to slide content",
+        "default":true
+      },
+       {
          "type": "radio",
          "id": "transition",
          "label": "Slide transition",
@@ -571,6 +597,13 @@ data-aos="fade">
          "label": "Change slides every (seconds)",
          "default": 5,
          "info": "Set 0 to stop autoplay"
+       },
+       {
+         "type": "checkbox",
+         "id": "enable_stop_pause_on_mobile",
+         "label": "Enable stop pause on mobile",
+         "info": "Prevent the slide from pausing while scrolling on mobile.",
+         "default": true
        },
       {
         "type": "header",
@@ -635,6 +668,9 @@ data-aos="fade">
         "search",
         "customers/account"
       ]
+    },
+    "disabled_on": {
+      "groups": ["header", "footer"]
     },
     "presets": [
     {

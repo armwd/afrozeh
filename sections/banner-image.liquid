@@ -27,6 +27,14 @@ if template contains 'page'
   assign heading = page.title
 endif
 
+# Handle LCP loading
+assign loading = 'lazy'
+assign fetch_priority = 'auto'
+if section.index == 1
+  assign fetch_priority = 'high'
+  assign loading = 'eager'
+endif
+
 -%}
 
 
@@ -44,14 +52,16 @@ endif
               render 'basic-responsive-image',
               type:  article.image,
               width: 2000,
-              loading: 'eager'
+              loading: 'eager',
+              fetchpriority: fetch_priority
             %}
           {%- else -%}
             {%
               render 'basic-responsive-image',
               type:  section.settings.image,
               width: 2000,
-              loading: 'eager'
+              loading: 'eager',
+              fetchpriority: fetch_priority
             %}
           {%- endif -%}
         </div>

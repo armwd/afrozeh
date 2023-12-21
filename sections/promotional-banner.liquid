@@ -9,6 +9,14 @@
     assign section_padding = 'mt0 pb0'
   endif
 
+  # Handle LCP loading
+  assign loading = 'lazy'
+  assign fetch_priority = 'auto'
+  if section.index == 1
+    assign fetch_priority = 'high'
+    assign loading = 'eager'
+  endif
+
 -%}
 
 <section class="row grid__wrapper gr0 collection__promotion-{{ section.id }} collection__promotion-section  global__section {{ section_padding }}"
@@ -21,7 +29,9 @@ data-section-id="{{ section.id }}" >
        {%
          render 'basic-responsive-image',
          type: section.settings.image,
-         width: 1200
+         width: 1200,
+         loading: loading,
+         fetchpriority: fetch_priority
        %}
       {% endif %}
      </div>
@@ -238,6 +248,9 @@ data-section-id="{{ section.id }}" >
   "enabled_on": {
     "templates": ["collection", "page"],
     "groups": ["footer"]
+  },
+  "disabled_on": {
+    "groups": ["header"]
   }
 }
 {% endschema %}

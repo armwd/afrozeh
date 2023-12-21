@@ -22,17 +22,17 @@
 </style>
 
 <section class="global__section padded--section section-{{ section.id }} textwith__icon-section {{ section_padding }}" data-section-id="{{ section.id }}" data-aos="fade">
-  <div class="row grid__wrapper">
+  <div class="row grid__wrapper gr0">
 
     {% if section.settings.heading != blank %}
     <div class="textwith__icon--heading span-12 auto">
-      <h2 class="section-heading">{{ section.settings.heading | escape }}</h2>
+      <h2 class="section-heading mb0">{{ section.settings.heading | escape }}</h2>
     </div>
     {% endif %}
 
-      <div class="textwith__icon--content textwith__icon--content--{{ section.id }} grid__wrapper">
+      <div class="textwith__icon--content textwith__icon--content--{{ section.id }}{% if section.settings.appearance == 'inline' %} appearance--inline{% endif %} grid__wrapper gr0">
         {% for block in section.blocks %}
-          {%- liquid
+        {%- liquid
 
             assign has_link = false
             assign link = false
@@ -51,21 +51,33 @@
             endif
 
           -%}
-          <div class="textwith__icon--content-block">
+          <div class="textwith__icon--content-block"
+            data-aos="fade"
+            data-aos-delay="{{ forloop.index | times: 100 }}"
+            {{ block.shopify_attributes }}>
+
             {% if block.settings.image == blank %}
-              <div class="icon__wrapper center">
+              <div class="icon__wrapper{% unless section.settings.appearance == 'inline' %} center{% endunless %}">
                 {% if has_link %}<a href="{{ block.settings.link }}" title="{{ block.settings.text | escape }}">{% endif %}
+                {% liquid
+                  assign icon = block.settings.icon
+                  assign type = 'fash-theme'
+                  case icon
+                  when 'bag', 'cart', 'chat', 'checkmark', 'gift', 'grid', 'home', 'menu-dots', 'money', 'promo', 'sale-tag', 'search', 'secure', 'share', 'ship-truck', 'star', 'user', 'wish', 'wish-focus'
+                    assign type = 'apollo'
+                  endcase
+                %}
                 {% render 'snip-icons',
                    wrapper: '.text__block-icon',
-                   type: 'apollo',
+                   type: 'apolo',
                    icon: block.settings.icon,
-                   size: '40px',
+                   size: section.settings.icon_height | append 'px',
                    fill: section.settings.color %}
                 {% if has_link %}</a>{% endif %}
               </div>
             {% else %}
-              <div class="icon__image-wrapper center">
-                {% if has_link %}<a href="{{ block.settings.link }}" title="{{ block.settings.text | escape }}">{% endif %}
+              <div class="icon__image-wrapper{% unless section.settings.appearance == 'inline' %} center{% endunless %}">
+              {% if has_link %}<a href="{{ block.settings.link }}" title="{{ block.settings.text | escape }}">{% endif %}
                 {%
                   render 'basic-responsive-image',
                   type: block.settings.image,
@@ -74,7 +86,7 @@
                 {% if has_link %}</a>{% endif %}
               </div>
             {% endif %}
-            <div class="rte center">
+            <div class="rte{% unless section.settings.appearance == 'inline' %} center{% endunless %}">
               {{ block.settings.rich_text }}
             </div>
 
@@ -111,6 +123,32 @@
       "id": "heading",
       "label": "Heading",
       "default": "Welcome"
+    },
+    {
+      "type": "range",
+      "id": "icon_height",
+      "min": 20,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Icon height",
+      "default": 20
+    },
+    {
+      "type": "radio",
+      "id": "appearance",
+      "label": "Appearance",
+      "options": [
+        {
+          "value": "inline",
+          "label": "Inline"
+        },
+        {
+          "value": "icon_above",
+          "label": "Icon above"
+        }
+      ],
+      "default": "inline"
     },
     {
       "type": "color",
@@ -160,12 +198,36 @@
             "label": "Choose an icon",
             "options": [
             {
+              "value": "appliance",
+              "label": "Appliance"
+            },
+            {
               "value": "bag",
               "label": "Bag"
             },
             {
-              "value": "cart",
-              "label": "Cart"
+              "value": "battery",
+              "label": "Battery"
+            },
+            {
+              "value": "bed",
+              "label": "Bed"
+            },
+            {
+              "value": "bell",
+              "label": "Bell"
+            },
+            {
+              "value": "calendar",
+              "label": "Calendar"
+            },
+            {
+              "value": "camera",
+              "label": "Camera"
+            },
+            {
+              "value": "chair",
+              "label": "Chair"
             },
             {
               "value": "chat",
@@ -176,28 +238,148 @@
               "label": "Checkmark"
             },
             {
+              "value": "child",
+              "label": "Child"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "disability",
+              "label": "Disability"
+            },
+            {
+              "value": "dishwasher",
+              "label": "Dishwasher"
+            },
+            {
+              "value": "display",
+              "label": "Display"
+            },
+            {
+              "value": "drill",
+              "label": "Drill"
+            },
+            {
+              "value": "drink",
+              "label": "Drink"
+            },
+            {
+              "value": "eco",
+              "label": "Eco"
+            },
+            {
+              "value": "filter",
+              "label": "Filter"
+            },
+            {
+              "value": "flower",
+              "label": "Flower"
+            },
+            {
+              "value": "food",
+              "label": "Food"
+            },
+            {
               "value": "gift",
               "label": "Gift"
+            },
+            {
+              "value": "globe",
+              "label": "Globe"
             },
             {
               "value": "grid",
               "label": "Grid"
             },
             {
+              "value": "hammer",
+              "label": "Hammer"
+            },
+            {
+              "value": "hanger",
+              "label": "Hanger"
+            },
+            {
+              "value": "headphones",
+              "label": "Headphones"
+            },
+            {
+              "value": "wish",
+              "label": "Heart"
+            },
+            {
+              "value": "wish-focus",
+              "label": "Heart filled"
+            },
+            {
+              "value": "help",
+              "label": "Help"
+            },
+            {
               "value": "home",
               "label": "Home"
+            },
+            {
+              "value": "laptop",
+              "label": "Laptop"
+            },
+            {
+              "value": "laundry",
+              "label": "Laundry"
+            },
+            {
+              "value": "lights",
+              "label": "Lights"
+            },
+            {
+              "value": "location",
+              "label": "Location"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
             },
             {
               "value": "menu-dots",
               "label": "Menu dots"
             },
             {
+              "value": "microphone",
+              "label": "Microphone"
+            },
+            {
               "value": "money",
               "label": "Money"
             },
             {
+              "value": "oven",
+              "label": "Oven"
+            },
+            {
+              "value": "phone",
+              "label": "Phone"
+            },
+            {
+              "value": "pine",
+              "label": "Pine"
+            },
+            {
+              "value": "planet",
+              "label": "Planet"
+            },
+            {
               "value": "promo",
               "label": "Promo"
+            },
+            {
+              "value": "receiver",
+              "label": "Receiver"
+            },
+            {
+              "value": "returns",
+              "label": "Returns"
             },
             {
               "value": "sale-tag",
@@ -212,6 +394,10 @@
               "label": "Secure"
             },
             {
+              "value": "security",
+              "label": "Security"
+            },
+            {
               "value": "share",
               "label": "Share"
             },
@@ -220,12 +406,40 @@
               "label": "Shipping truck"
             },
             {
+              "value": "speaker",
+              "label": "Speaker"
+            },
+            {
               "value": "star",
               "label": "Star"
             },
             {
+              "value": "support",
+              "label": "Support"
+            },
+            {
+              "value": "trophy",
+              "label": "Trophy"
+            },
+            {
+              "value": "tv",
+              "label": "TV"
+            },
+            {
               "value": "user",
               "label": "User"
+            },
+            {
+              "value": "verified",
+              "label": "Verified"
+            },
+            {
+              "value": "video",
+              "label": "Video"
+            },
+            {
+              "value": "watch",
+              "label": "Watch"
             },
             {
               "value": "wish",

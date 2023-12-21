@@ -54,7 +54,12 @@
        -%}
 
          {% if accordion_title %}
-            <button class="js-accordion-header c-accordion__header" aria-expanded="false" aria-controls="{{ accordion_content_id }}" data-toggle="accordion">
+            <button class="js-accordion-header c-accordion__header" 
+              data-aos="fade"
+              data-aos-delay="{{ forloop.index | times: 100 }}"
+              aria-expanded="false" 
+              aria-controls="{{ accordion_content_id }}" 
+              data-toggle="accordion">
               {{ accordion_title }}
             </button>
              <div class="c-accordion__panel {{ accordion_content_id }} rte" id="{{ accordion_content_id }}" data-parent="#c-accordion--{{ unique_id }}">
@@ -142,6 +147,9 @@
   ],
   "enabled_on": {
     "templates": ["404","article","index","page","product","search"]
+  },
+  "disabled_on": {
+    "groups": ["header", "footer"]
   }
 }
 {% endschema %}

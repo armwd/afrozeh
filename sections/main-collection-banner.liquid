@@ -17,6 +17,14 @@
       endif
   endcase
 
+  # Handle LCP loading
+  assign loading = 'lazy'
+  assign fetch_priority = 'auto'
+  if section.index == 1
+    assign fetch_priority = 'high'
+    assign loading = 'eager'
+  endif
+
 -%}
 
   <section class="collection__section--banner collection__banner-{{ section.id }} parallax gridlock-fluid"
@@ -35,7 +43,8 @@
                   render 'basic-responsive-image',
                   type: collection.image,
                   width: 2000,
-                  loading: 'eager'
+                  loading: 'eager',
+                  fetchpriority: fetch_priority
                 %}
               </div>
             {% endif %}
@@ -46,14 +55,16 @@
                   render 'basic-responsive-image',
                   type: section.settings.image,
                   width: 2000,
-                  loading: 'eager'
+                  loading: 'eager',
+                  fetchpriority: fetch_priority
                 %}
               </div>
             {% endif %}
           {% when 'shortcode' %}
             {% if images[basic_banner_img] != blank %}
               <div class="collection__banner-image collection__banner-image--{{ section.settings.banner_image_type }} parralax__image">
-                {{ images[basic_banner_img] | image_url: width: 2000 | image_tag: loading: 'eager' }}
+                {{ images[basic_banner_img] | image_url: width: 2000 | image_tag: loading: 'eager',
+                  fetchpriority: fetch_priority }}
               </div>
             {% endif %}
         {% endcase %}

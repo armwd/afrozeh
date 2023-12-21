@@ -15,7 +15,7 @@
   data-section-id="{{ section.id }}"
   data-section-type="featured-collections"
   data-aos="fade">
-  <div class="row grid__wrapper">
+  <div class="row grid__wrapper gr0">
     {% if section.settings.heading != blank %}
     <div class="span-12 auto">
       <h2 class="section-heading mb0">{{ section.settings.heading | escape }}</h2>
@@ -75,8 +75,21 @@
                 {% render 'onboard-product', prod_limit: prod_limit, grid: grid %}
               {% else %}
                 {% for product in collection.products limit: prod_limit %}
-                  <div id="product-listing-{{ product.id }}" class="featured__collection-product product-index" data-product-id="{{ product.id }}" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
-                    {% render 'product-listing', product: product, collection: collection %}
+                  {% liquid
+
+                    assign loading = 'lazy'
+                    assign fetch_priority = 'auto'
+
+                    if section.index == 1
+                      if forloop.parentloop.index == 1 and forloop.index <= grid
+                        assign loading = 'eager'
+                        assign fetch_priority = 'high'
+                      endif
+                    endif
+
+                   %}
+                  <div id="product-listing-{{ product.id }}" class="featured__collection-product product-index js-product-listing" data-product-id="{{ product.id }}" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
+                    {% render 'product-listing', product: product, collection: collection, loading: loading, fetchpriority: fetch_priority %}
                   </div>
                 {% endfor %}
               {% endif %}
@@ -122,6 +135,30 @@
       "id": "heading",
       "label": "Heading",
       "default": "Tabbed collections"
+    },
+    {
+      "type": "select",
+      "id": "section_padding",
+      "label": "Section spacing",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        },
+        {
+          "value": "both",
+          "label": "Both"
+        },
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ],
+      "default": "bottom"
     }
   ],
   "blocks": [{
@@ -149,7 +186,7 @@
         "step": 1,
         "label": "Products shown",
         "default": 12
-      },
+},
       {
         "type": "select",
         "id": "section_padding",
@@ -189,6 +226,9 @@
   }],
   "enabled_on": {
     "templates": ["404", "article", "blog", "cart", "collection", "list-collections", "index", "page", "product", "search"]
+  },
+  "disabled_on": {
+    "groups": ["header", "footer"]
   }
 }
 {% endschema %}

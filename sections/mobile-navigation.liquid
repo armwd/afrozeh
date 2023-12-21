@@ -73,7 +73,7 @@
                 -%}
 
                 <li class="js-accordion-header c-accordion__header">
-                  <a class="js-accordion-link c-accordion__link" href="{{ link.url }}" arial-label="{{ link.title | escape }}">{{ link.title | escape }}</a>
+                  <a class="js-accordion-link c-accordion__link" href="{{ link.url }}" arial-label="{{ link.title | escape }}>{{ link.title | escape }}</a>
                   <button class="dropdown-arrow" aria-label="{{  link.title | escape }}" data-toggle="accordion" aria-expanded="false" aria-controls="{{ accordion_content_id }}" >
                     {% render 'snip-icons',
                      wrapper: '.c-accordion__header',

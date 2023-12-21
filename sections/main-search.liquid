@@ -19,6 +19,8 @@
     assign filter_count = filter_count | plus: filter.active_values.size
   endfor
 
+  assign aos_mod = section.settings.grid | plus: 0
+
 -%}
 
 <section class="section-main-search global__section row grid__wrapper"
@@ -104,12 +106,13 @@
                       <!--'item' is a page. All page object properties can be accessed. -->
                       <a class="search__page_results--link" href="{{ item.url }}" title="{{ item.title | escape }}">
                         {% if item.content contains "img" %}
+                          {% assign has_pages_images = true %}
                           {%- liquid
                             assign feat_image = item.content | split: 'src="'
                             assign feat_image = feat_image[1] | split: '"' | first | replace: '//cdn', 'http://cdn' | replace: 'http:http://', 'http://' | remove: 'https:'
                           -%}
                           <div class="search__page_results--img">
-                            <img src="{{ feat_image }}" alt="{{ item.title }}">
+                            <img src="{{ feat_image }}" alt="{{ item.title }}" loading="eager" fetchpriority="high">
                           </div>
                         {% endif %}
                         <div class="search__page_results--text">
@@ -133,11 +136,22 @@
                       <!--'item' is an article All article object properties can be accessed. -->
                       <a class="search__page_results--link" href="{{ item.url }}" title="{{ item.title | escape }}">
                         {% if item.image %}
+                          {% assign has_articles_images = true %}
                           <div class="search__page_results--img">
+                            {% liquid
+                              assign loading = 'eager'
+                              assign fetch_priority = 'high'
+                              if has_pages
+                                assign loading = 'lazy'
+                                assign fetch_priority = 'auto'
+                              endif
+                             %}
                             {%
                               render 'basic-responsive-image',
                               type: item.image,
-                              width: 1200
+                              width: 1200,
+                              loading: loading,
+                              fetchpriority: fetch_priority
                             %}
                           </div>
                         {% endif %}
@@ -158,13 +172,24 @@
               <div id="product-loop" class="search_section-grid--wrapper">
                 {% for item in search.results %}
                   {% if item.object_type == 'product' %}
+                    {% liquid
+                      assign loading = 'eager'
+                      assign fetch_priority = 'high'
+
+                      if has_pages and has_pages_images or has_articles and has_articles_images
+                        assign loading = 'lazy'
+                        assign fetch_priority = 'auto'
+                      endif
+                     %}
                     <div id="product-listing-{{ item.id }}"
                       class="product-index js-product-listing"
                       data-alpha="{{ item.title }}"
                       data-price="{{ item.price }}"
-                      data-product-id="{{ item.id }}">
+                      data-product-id="{{ item.id }}"
+                      data-aos="fade"
+                      data-aos-delay="{{ forloop.index | minus: 1 | modulo: aos_mod | times: 100 }}">
                       <!-- 'item' is a product. All product object properties can be accessed.-->
-                      {% render 'product-listing', product: item, collection: collection %}
+                      {% render 'product-listing', product: item, collection: collection, loading: loading, fetchpriority: fetch_priority %}
                     </div>
                   {% endif %}
                 {% endfor %}

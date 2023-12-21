@@ -67,7 +67,7 @@ data-section-type="contact-section">
               {% endif %}
 
               {% for block in section.blocks %}
-              <div class="contact__form--input">
+              <div class="contact__form--input" data-aos="fade">
 
                 {%-liquid
 
@@ -264,6 +264,9 @@ data-section-type="contact-section">
   "enabled_on": {
     "templates": ["index", "404", "article", "page", "product"],
     "groups": ["footer"]
+  },
+  "disabled_on": {
+    "groups": ["header"]
   }
 }
 {% endschema %}

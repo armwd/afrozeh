@@ -93,7 +93,7 @@ data-section-type="giftcard-page">
 
       <div class="gift-card-actions">
         <a href="{{ routes.root_url }}" class="gift-card__shop button" target="_blank" rel="noreferrer">{{ 'gift_cards.issued.shop_link' | t }}</a>
-        <a href="#" rel="nofollow" class="gift-card__print" onclick="printContent('giftcard-page');">
+<a href="#" rel="nofollow" class="gift-card__print" onclick="printContent('giftcard-page');">
           <span class="vib-center">{{ 'gift_cards.issued.print' | t }}</span>
         </a>
         <script type="text/javascript">
@@ -141,6 +141,11 @@ data-section-type="giftcard-page">
     }
     .gift-card-image svg #Desk---Gift-Card {
       fill: {{ section.settings.text_color }} !important;
+    }
+    div#qr-code {
+      width: 120px;
+      height: 120px;
+      margin: auto;
     }
   </style>
 </section>

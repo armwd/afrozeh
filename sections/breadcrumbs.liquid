@@ -1,4 +1,4 @@
-<section class="global__section row grid__wrapper">
+<section class="global__section row grid__wrapper" data-aos="fade">
   <div id="breadcrumb" class="span-12 auto{% if section.settings.text_center %} center{% endif %}">
     <a href="{{ routes.root_url }}" class="homepage-link" title="{{ 'general.breadcrumbs.home' | t }}">{{ 'general.breadcrumbs.home' | t }}</a>
 
@@ -62,6 +62,9 @@
   "enabled_on": {
     "templates": ["404", "article", "blog", "cart", "collection", "list-collections", "page", "product", "search", "customers/account"],
     "groups": ["footer"]
+  },
+  "disabled_on": {
+    "groups": ["header"]
   }
 }
 {% endschema %}

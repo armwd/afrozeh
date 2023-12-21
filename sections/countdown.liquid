@@ -109,10 +109,10 @@
             <div class="countdown__heading block-{{ block.id }}" {{ block.shopify_attributes }}>
               {%- if heading_text != blank -%}
                 <h2 class="mb0">{{ heading_text }}</h2>
-                {% if rich_text != blank %}
-                  {{ rich_text }}
-                {% endif %}
-              {%- endif -%}
+                            {% if rich_text != blank %}
+                {{ rich_text }}
+              {% endif %}
+{%- endif -%}
             </div>
           {% endif %}
           {% if block.type == 'button' %}

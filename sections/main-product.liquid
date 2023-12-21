@@ -17,6 +17,12 @@
 
   assign product_buttons_form_id = 'product-form-buttons-' | append: section.id
 
+  if product.template_suffix == 'pre-order'
+    assign button_text = 'products.product.pre_order' | t
+  else
+    assign button_text = 'products.product.add_to_cart' | t
+  endif
+
 -%}
 
 <section id="product-{{ product.id }}"
@@ -59,7 +65,7 @@
    }
  {% endcapture %}
 
-  <div class="product__section-images product__section-image--{{ thumbnail_position }} carousel-container js-product-gallery span-6 sm-span-12 auto"
+  <div class="product__section-images product__section-image--{{ thumbnail_position }} carousel-container js-product-gallery span-6 md-span-12 sm-span-12 auto"
     data-product-gallery data-product-single-media-group
     data-gallery-config='{{ product_gallery_config }}' data-aos="fade">
 
@@ -77,7 +83,7 @@
     {%- endif -%}
   </div>
 
-  <div class="product__section-contentWrapper span-6 sm-span-12 auto" data-aos="fade" data-aos-anchor="#identity">
+  <div class="product__section-contentWrapper span-6 md-span-12 sm-span-12 auto" data-aos="fade" data-aos-anchor="#identity">
     <div class="product__section-content">
       <div class="product__section-details">
         <div class="product__section--header product__section--element" {{ block.shopify_attributes }}>
@@ -120,7 +126,7 @@
                 {%- endif -%}
                 {%- if block.type == 'tab_content' -%}
                   <div class="tabbed__product-content tabbed__product-{{ block.id }} js-tabbed-content" id="{{ block.id }}-tab-{{ forloop.index }}" {{ block.shopify_attributes }}>
-                   {% if forloop.index == 8 %}
+{% if forloop.index == 8 %}
                      {% if product.tags contains 'bridal_disclaimer' %}
                         We take great care in presenting our products accurately on our website. However, please be aware that actual colors, textures, and sizes may slightly vary due to factors beyond our control, such as individual screen settings and manufacturing processes. Kindly refer to the product description for accurate details such as sizing, fabric, and care instructions.Reach out to our customer support team if you have any questions regarding URGENT deliveries, before making your purchase.
                     <br>
@@ -129,11 +135,11 @@
                         {{ block.settings.tab_text }}
                        {% endif %}
                     {% else %}
-                      {{ block.settings.tab_text }}
+                    {{ block.settings.tab_text }}
                     {% if block.settings.show_contact_form %}
                       {% render 'question' %}
                     {% endif %}
-                    {% endif %}
+{% endif %}
                   </div>
                 {%- endif -%}
                 {%- if block.type == 'tab_question' -%}
@@ -215,7 +221,6 @@
               assign size_chart_label = block.settings.size_chart_label
               assign size_chart_page = block.settings.size_chart_page
             -%}
-            
             {%- assign product_form_id = 'product-form-' | append: section.id -%}
             {% form 'product', product,
                id: product_form_id,
@@ -239,7 +244,6 @@
                        size_chart_page: size_chart_page %}
                    {% endfor %}
                  </div>
-                 
                {%- else -%}
                  <div class="product__variants-select no-js-hidden" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
                    {%- for option in product.options_with_values -%}
@@ -353,12 +357,47 @@
           {%- when 'text_popup' -%}
             {% if block.settings.text != blank and block.settings.popup_trigger != blank %}
               <div class="product__section--popup product__section--element{% if block.settings.show_inline %} inline{% endif %}" {{ block.shopify_attributes }}>
-                <button class="product__contact-trigger button-as-link js-modal-open js-contact-trigger" type="button" name="button" data-wau-modal-target="popup-content" >{{ block.settings.popup_trigger }}</button>
-                <div data-wau-modal-content="popup-content" style="display: none">
+                <button class="product__contact-trigger button-as-link js-modal-open js-contact-trigger" type="button" name="button" data-wau-modal-target="popup-content--{{ block.id }}" >{{ block.settings.popup_trigger }}</button>
+                <div data-wau-modal-content="popup-content--{{ block.id }}" style="display: none">
                   {{ block.settings.text }}
                 </div>
               </div>
             {% endif %}
+
+          {%- when 'text_with_icon' -%}
+            {% liquid
+              assign icon = block.settings.icon
+              assign type = 'fash-theme'
+              case icon
+              when 'bag', 'cart', 'chat', 'checkmark', 'gift', 'grid', 'home', 'menu-dots', 'money', 'promo', 'sale-tag', 'search', 'secure', 'share', 'ship-truck', 'star', 'user', 'wish', 'wish-focus'
+                assign type = 'apollo'
+              endcase
+            %}
+            {% unless block.settings.text == blank %}
+              <div class="product__section--text-with-icon product__section--element" {{ block.shopify_attributes }}>
+                <div class="product--text-with-icon__icon">
+                  {% render 'snip-icons',
+                    wrapper: '.product__block-icon',
+                    type: type,
+                    icon: block.settings.icon,
+                    size: '20px' %}
+                  </div>
+                  <div class="product--text-with-icon__text">
+                    {{ block.settings.text }}
+                  </div>
+              </div>
+            {% endunless %}
+
+          {% when 'payment_icons' %}
+            <div class="product__section--payment-icons product__section--element"
+                style="background-color:{{ block.settings.background_color }};" {{ block.shopify_attributes }}>
+              {% if block.settings.title != blank %}
+                <h5>{{ block.settings.title | escape }}</h5>
+              {% endif %}
+            {% for type in shop.enabled_payment_types %}
+              {{ type | payment_type_svg_tag: class:'payment-icon' }}
+            {% endfor %}
+            </div>
 
           {% when 'stock_levels' %}
             <div class="product__section-stockLevels" {{ block.shopify_attributes }}>
@@ -397,7 +436,11 @@
 
                 {%- liquid
 
-                  assign call_to_action = 'products.product.add_to_cart' | t
+                  if product.template_suffix == 'pre-order'
+                    assign call_to_action = 'products.product.pre_order' | t
+                  else
+                    assign call_to_action = 'products.product.add_to_cart' | t
+                  endif
                   unless current_variant.available
                     assign call_to_action = 'products.product.sold_out' | t
                   endunless
@@ -409,7 +452,7 @@
                 {% if block.settings.show_gift_card_recipient and product.gift_card? %}
                   {%- render 'gift-card-recipient-form', product: product, form: form, section: section -%}
                 {%- endif -%}
-                <div class="size-chart-wrap">
+<div class="size-chart-wrap">
                   <div style="margin: 10px 11px 15px 0;" class="radio-size-options size-chart" data-app="eastsideco_sizeGuides"
                              data-shop="{{ shop.permanent_domain }}"
                              data-tags="{{ product.tags | join:',' | escape }}"
@@ -439,12 +482,12 @@
                   <b>{{ 'cart.general.cart_error' | t }}</b>&nbsp;&nbsp;&nbsp;{{ 'cart.general.update_qty_error' | t }}
                 </div>
 
-                <input id="addToCart" type="submit" name="button" class=" {% if product.tags contains 'Hide_Add_to_Cart' %} hide-everything {% endif %} add clearfix AddtoCart js-ajax-submit {% if settings.show_payment_button and product.selling_plan_groups.size == 0 %} secondary-button{% endif %}" value="{{ call_to_action }}" {% unless current_variant.available %}disabled{% endunless %} />
-                {% unless product.tags contains 'Hide_Add_to_Cart' %}
+                <input id="addToCart" type="submit" name="button" class="{% if product.tags contains 'Hide_Add_to_Cart' %} hide-everything {% endif %} add clearfix AddtoCart js-ajax-submit {% if settings.show_payment_button and product.selling_plan_groups.size == 0 %} secondary-button{% endif %}" value="{{ call_to_action }}" {% unless current_variant.available %}disabled{% endunless %} />
+ {% unless product.tags contains 'Hide_Add_to_Cart' %}
                 {% if settings.show_payment_button %}
                  {{ form | payment_button }}
                 {% endif %}
-                {% endunless %}
+{% endunless %}
               {%-  endform -%}
             </div>
 
@@ -496,12 +539,22 @@
 
           {%- when 'image' -%}
             {% if block.settings.image != blank %}
+            {% liquid
+              assign loading = 'lazy'
+              assign fetch_priority = 'auto'
+              if section.index < 3 and forloop.index < 3
+                assign loading = 'eager'
+                assign fetch_priority = 'high'
+              endif
+             %}
             <div class="product__section--image product__section--element" {{ block.shopify_attributes }}>
               {% if block.settings.link != blank %}<a href="{{ block.settings.link }}">{% endif %}
                   {%
                     render 'basic-responsive-image',
                     type: block.settings.image,
-                    width: 2400
+                    width: 2400,
+                    loading: loading,
+                    fetchpriority: fetch_priority
                   %}
               {% if block.settings.link != blank %}</a>{% endif %}
             </div>
@@ -553,6 +606,7 @@
     .product__section-container {
         background: {{ section.settings.product_background }};
         padding-top: 20px;
+        padding-bottom: 20px;
     }
     .product__section-container .contact__form--input label,
     .theme-features__ghost-buttons--true .product__section-container .secondary-button,
@@ -695,6 +749,25 @@
       "settings": []
     },
     {
+      "type": "payment_icons",
+      "name": "Payment icons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Secure online shopping"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background",
+          "default": "#f5f5f5"
+        }
+      ]
+    },
+    {
       "type": "tab_content",
       "name": "Tab content",
       "settings": [
@@ -710,7 +783,7 @@
           "type": "richtext",
           "default": "<p>Add text which will be shown in tabs across all product pages</p>"
         },
-       {
+        {
           "label": "Text",
           "id": "tab_text_two",
           "type": "richtext",
@@ -864,6 +937,269 @@
       ]
     },
     {
+      "type": "text_with_icon",
+      "name": "Text with icon",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Add text alongside an icon</p>"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Choose an icon",
+          "options": [
+          {
+            "value": "appliance",
+            "label": "Appliance"
+          },
+          {
+            "value": "bag",
+            "label": "Bag"
+          },
+          {
+            "value": "battery",
+            "label": "Battery"
+          },
+          {
+            "value": "bed",
+            "label": "Bed"
+          },
+          {
+            "value": "bell",
+            "label": "Bell"
+          },
+          {
+            "value": "calendar",
+            "label": "Calendar"
+          },
+          {
+            "value": "camera",
+            "label": "Camera"
+          },
+          {
+            "value": "chair",
+            "label": "Chair"
+          },
+          {
+            "value": "chat",
+            "label": "Chat"
+          },
+          {
+            "value": "checkmark",
+            "label": "Checkmark"
+          },
+          {
+            "value": "child",
+            "label": "Child"
+          },
+          {
+            "value": "clock",
+            "label": "Clock"
+          },
+          {
+            "value": "disability",
+            "label": "Disability"
+          },
+          {
+            "value": "dishwasher",
+            "label": "Dishwasher"
+          },
+          {
+            "value": "display",
+            "label": "Display"
+          },
+          {
+            "value": "drill",
+            "label": "Drill"
+          },
+          {
+            "value": "drink",
+            "label": "Drink"
+          },
+          {
+            "value": "eco",
+            "label": "Eco"
+          },
+          {
+            "value": "filter",
+            "label": "Filter"
+          },
+          {
+            "value": "flower",
+            "label": "Flower"
+          },
+          {
+            "value": "food",
+            "label": "Food"
+          },
+          {
+            "value": "gift",
+            "label": "Gift"
+          },
+          {
+            "value": "globe",
+            "label": "Globe"
+          },
+          {
+            "value": "grid",
+            "label": "Grid"
+          },
+          {
+            "value": "hammer",
+            "label": "Hammer"
+          },
+          {
+            "value": "hanger",
+            "label": "Hanger"
+          },
+          {
+            "value": "headphones",
+            "label": "Headphones"
+          },
+          {
+            "value": "wish",
+            "label": "Heart"
+          },
+          {
+            "value": "wish-focus",
+            "label": "Heart filled"
+          },
+          {
+            "value": "help",
+            "label": "Help"
+          },
+          {
+            "value": "home",
+            "label": "Home"
+          },
+          {
+            "value": "laptop",
+            "label": "Laptop"
+          },
+          {
+            "value": "laundry",
+            "label": "Laundry"
+          },
+          {
+            "value": "lights",
+            "label": "Lights"
+          },
+          {
+            "value": "location",
+            "label": "Location"
+          },
+          {
+            "value": "lock",
+            "label": "Lock"
+          },
+          {
+            "value": "menu-dots",
+            "label": "Menu dots"
+          },
+          {
+            "value": "microphone",
+            "label": "Microphone"
+          },
+          {
+            "value": "money",
+            "label": "Money"
+          },
+          {
+            "value": "oven",
+            "label": "Oven"
+          },
+          {
+            "value": "phone",
+            "label": "Phone"
+          },
+          {
+            "value": "pine",
+            "label": "Pine"
+          },
+          {
+            "value": "planet",
+            "label": "Planet"
+          },
+          {
+            "value": "promo",
+            "label": "Promo"
+          },
+          {
+            "value": "receiver",
+            "label": "Receiver"
+          },
+          {
+            "value": "returns",
+            "label": "Returns"
+          },
+          {
+            "value": "sale-tag",
+            "label": "Sale tag"
+          },
+          {
+            "value": "search",
+            "label": "Search"
+          },
+          {
+            "value": "secure",
+            "label": "Secure"
+          },
+          {
+            "value": "security",
+            "label": "Security"
+          },
+          {
+            "value": "share",
+            "label": "Share"
+          },
+          {
+            "value": "ship-truck",
+            "label": "Shipping truck"
+          },
+          {
+            "value": "speaker",
+            "label": "Speaker"
+          },
+          {
+            "value": "star",
+            "label": "Star"
+          },
+          {
+            "value": "support",
+            "label": "Support"
+          },
+          {
+            "value": "trophy",
+            "label": "Trophy"
+          },
+          {
+            "value": "tv",
+            "label": "TV"
+          },
+          {
+            "value": "user",
+            "label": "User"
+          },
+          {
+            "value": "verified",
+            "label": "Verified"
+          },
+          {
+            "value": "video",
+            "label": "Video"
+          },
+          {
+            "value": "watch",
+            "label": "Watch"
+          }
+        ]
+      }
+      ]
+    },
+    {
       "type": "complementary_products",
       "name": "Complementary products",
       "limit": 1,
@@ -885,8 +1221,24 @@
           "max": 10,
           "step": 1,
           "label": "Complementary products to show",
-          "info": "Displays in carousel when more than three products.",
+"info": "Displays in carousel when more than three products.",
           "default": 2
+        },
+        {
+          "type": "radio",
+          "id": "appearance",
+          "label": "Appearance",
+          "default":"simple",
+          "options": [
+            {
+              "value": "full",
+              "label": "Full"
+            },
+            {
+              "value": "simple",
+              "label": "Simple"
+            }
+          ]
         }
       ]
     },

@@ -314,6 +314,17 @@ data-aos="fade">
                 </div>
               {% endif %}
 
+            {% when 'payment_icons' %}
+                <div class="product__section--payment-icons product__section--element"
+                    style="background-color:{{ block.settings.background_color }};" {{ block.shopify_attributes }}>
+                  {% if block.settings.title != blank %}
+                    <h5>{{ block.settings.title | escape }}</h5>
+                  {% endif %}
+                {% for type in shop.enabled_payment_types %}
+                  {{ type | payment_type_svg_tag: class:'payment-icon' }}
+                {% endfor %}
+                </div>
+
             {% when 'stock_levels' %}
               <div class="product__section-stockLevels" {{ block.shopify_attributes }}>
                 {% if block.settings.threshold > 0 %}
@@ -419,8 +430,30 @@ data-aos="fade">
                 product: product
               %}
 
-            {%- when 'product_customization' -%}
+            {%- when 'image' -%}
+              {% if block.settings.image != blank %}
+              {% liquid
+                assign loading = 'lazy'
+                assign fetch_priority = 'auto'
+                if section.index < 3 and forloop.index < 3
+                  assign loading = 'eager'
+                  assign fetch_priority = 'high'
+                endif
+                %}
+              <div class="product__section--image product__section--element" {{ block.shopify_attributes }}>
+                {% if block.settings.link != blank %}<a href="{{ block.settings.link }}">{% endif %}
+                    {%
+                      render 'basic-responsive-image',
+                      type: block.settings.image,
+                      width: 2400,
+                      loading: loading,
+                      fetchpriority: fetch_priority
+                    %}
+                {% if block.settings.link != blank %}</a>{% endif %}
+              </div>
+              {% endif %}
 
+            {%- when 'product_customization' -%}
 
             <div class="product__line-item product__section--element {{ block.shopify_attributes }}">
               {%
@@ -429,6 +462,30 @@ data-aos="fade">
                 product_buttons_form_id: product_buttons_form_id
               %}
             </div>
+
+            {%- when 'text_with_icon' -%}
+              {% liquid
+                assign icon = block.settings.icon
+                assign type = 'fash-theme'
+                case icon
+                when 'bag', 'cart', 'chat', 'checkmark', 'gift', 'grid', 'home', 'menu-dots', 'money', 'promo', 'sale-tag', 'search', 'secure', 'share', 'ship-truck', 'star', 'user', 'wish', 'wish-focus'
+                  assign type = 'apollo'
+                endcase
+              %}
+              {% unless block.settings.text ==  blank %}
+                <div class="product__section--text-with-icon product__section--element" {{ block.shopify_attributes }}>
+                  <div class="product--text-with-icon__icon">
+                    {% render 'snip-icons',
+                      wrapper: '.product__block-icon',
+                      type: type,
+                      icon: block.settings.icon,
+                      size: '20px' %}
+                    </div>
+                    <div class="product--text-with-icon__text">
+                      {{ block.settings.text }}
+                    </div>
+                </div>
+              {% endunless %}
 
             {%- when 'rating' -%}
               {%- if product.metafields.reviews.rating.value != blank -%}
@@ -617,6 +674,25 @@ data-aos="fade">
       "settings": []
     },
     {
+      "type": "payment_icons",
+      "name": "Payment icons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Secure online shopping"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background",
+          "default": "#f5f5f5"
+        }
+      ]
+    },
+    {
       "type": "share",
       "name": "Social sharing",
       "limit": 1,
@@ -716,6 +792,23 @@ data-aos="fade">
       ]
     },
     {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+      {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Optional"
+        }
+      ]
+    },
+    {
       "type": "product_customization",
       "name": "Product customization",
       "limit": 3,
@@ -769,6 +862,269 @@ data-aos="fade">
       ]
     },
     {
+      "type": "text_with_icon",
+      "name": "Text with icon",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Add text alongside an icon</p>"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Choose an icon",
+          "options": [
+          {
+            "value": "appliance",
+            "label": "Appliance"
+          },
+          {
+            "value": "bag",
+            "label": "Bag"
+          },
+          {
+            "value": "battery",
+            "label": "Battery"
+          },
+          {
+            "value": "bed",
+            "label": "Bed"
+          },
+          {
+            "value": "bell",
+            "label": "Bell"
+          },
+          {
+            "value": "calendar",
+            "label": "Calendar"
+          },
+          {
+            "value": "camera",
+            "label": "Camera"
+          },
+          {
+            "value": "chair",
+            "label": "Chair"
+          },
+          {
+            "value": "chat",
+            "label": "Chat"
+          },
+          {
+            "value": "checkmark",
+            "label": "Checkmark"
+          },
+          {
+            "value": "child",
+            "label": "Child"
+          },
+          {
+            "value": "clock",
+            "label": "Clock"
+          },
+          {
+            "value": "disability",
+            "label": "Disability"
+          },
+          {
+            "value": "dishwasher",
+            "label": "Dishwasher"
+          },
+          {
+            "value": "display",
+            "label": "Display"
+          },
+          {
+            "value": "drill",
+            "label": "Drill"
+          },
+          {
+            "value": "drink",
+            "label": "Drink"
+          },
+          {
+            "value": "eco",
+            "label": "Eco"
+          },
+          {
+            "value": "filter",
+            "label": "Filter"
+          },
+          {
+            "value": "flower",
+            "label": "Flower"
+          },
+          {
+            "value": "food",
+            "label": "Food"
+          },
+          {
+            "value": "gift",
+            "label": "Gift"
+          },
+          {
+            "value": "globe",
+            "label": "Globe"
+          },
+          {
+            "value": "grid",
+            "label": "Grid"
+          },
+          {
+            "value": "hammer",
+            "label": "Hammer"
+          },
+          {
+            "value": "hanger",
+            "label": "Hanger"
+          },
+          {
+            "value": "headphones",
+            "label": "Headphones"
+          },
+          {
+            "value": "wish",
+            "label": "Heart"
+          },
+          {
+            "value": "wish-focus",
+            "label": "Heart filled"
+          },
+          {
+            "value": "help",
+            "label": "Help"
+          },
+          {
+            "value": "home",
+            "label": "Home"
+          },
+          {
+            "value": "laptop",
+            "label": "Laptop"
+          },
+          {
+            "value": "laundry",
+            "label": "Laundry"
+          },
+          {
+            "value": "lights",
+            "label": "Lights"
+          },
+          {
+            "value": "location",
+            "label": "Location"
+          },
+          {
+            "value": "lock",
+            "label": "Lock"
+          },
+          {
+            "value": "menu-dots",
+            "label": "Menu dots"
+          },
+          {
+            "value": "microphone",
+            "label": "Microphone"
+          },
+          {
+            "value": "money",
+            "label": "Money"
+          },
+          {
+            "value": "oven",
+            "label": "Oven"
+          },
+          {
+            "value": "phone",
+            "label": "Phone"
+          },
+          {
+            "value": "pine",
+            "label": "Pine"
+          },
+          {
+            "value": "planet",
+            "label": "Planet"
+          },
+          {
+            "value": "promo",
+            "label": "Promo"
+          },
+          {
+            "value": "receiver",
+            "label": "Receiver"
+          },
+          {
+            "value": "returns",
+            "label": "Returns"
+          },
+          {
+            "value": "sale-tag",
+            "label": "Sale tag"
+          },
+          {
+            "value": "search",
+            "label": "Search"
+          },
+          {
+            "value": "secure",
+            "label": "Secure"
+          },
+          {
+            "value": "security",
+            "label": "Security"
+          },
+          {
+            "value": "share",
+            "label": "Share"
+          },
+          {
+            "value": "ship-truck",
+            "label": "Shipping truck"
+          },
+          {
+            "value": "speaker",
+            "label": "Speaker"
+          },
+          {
+            "value": "star",
+            "label": "Star"
+          },
+          {
+            "value": "support",
+            "label": "Support"
+          },
+          {
+            "value": "trophy",
+            "label": "Trophy"
+          },
+          {
+            "value": "tv",
+            "label": "TV"
+          },
+          {
+            "value": "user",
+            "label": "User"
+          },
+          {
+            "value": "verified",
+            "label": "Verified"
+          },
+          {
+            "value": "video",
+            "label": "Video"
+          },
+          {
+            "value": "watch",
+            "label": "Watch"
+          }
+        ]
+      }
+      ]
+    },
+    {
       "type": "complementary_products",
       "name": "Complementary products",
       "limit": 1,
@@ -818,6 +1174,9 @@ data-aos="fade">
   }],
   "enabled_on": {
     "templates": ["404", "article", "blog", "cart", "collection", "list-collections", "index", "page", "product", "search"]
+  },
+  "disabled_on": {
+    "groups": ["header", "footer"]
   }
 }
 {% endschema %}
