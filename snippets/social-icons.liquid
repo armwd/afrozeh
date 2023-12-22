@@ -1,5 +1,5 @@
 {% if settings.facebook_url != blank %}
-  <li>
+  <li class="social-icon-list">
     <a href="{{ settings.facebook_url }}" target="_blank" aria-label="Facebook">
       {% render 'snip-icons',
          wrapper: wrapper,
@@ -14,7 +14,7 @@
 {% endif %}
 
 {% if settings.twittername != blank %}
-  <li>
+  <li class="social-icon-list">
     <a href="{{ settings.twittername }}" target="_blank" aria-label="Twitter">
       {% render 'snip-icons',
          wrapper: wrapper,
@@ -29,7 +29,7 @@
 {% endif %}
 
 {% if settings.pinterest_url != blank %}
-  <li>
+  <li class="social-icon-list">
     <a href="{{ settings.pinterest_url }}" target="_blank" aria-label="Pinterest">
       {% render 'snip-icons',
          wrapper: wrapper,
@@ -44,7 +44,7 @@
 {% endif %}
 
 {% if settings.tumblr_url != blank %}
-  <li>
+  <li class="social-icon-list">
     <a href="{{ settings.tumblr_url }}" target="_blank" aria-label="Tumblr">
       {% render 'snip-icons',
          wrapper: wrapper,
@@ -59,7 +59,7 @@
 {% endif %}
 
 {% if settings.youtube_url != blank %}
-  <li>
+  <li class="social-icon-list">
     <a href="{{ settings.youtube_url }}" target="_blank" aria-label="Youtube">
       {% render 'snip-icons',
          wrapper: wrapper,
@@ -74,8 +74,8 @@
 {% endif %}
 
 {% if settings.instagram_id != blank %}
-    <li>
-      <a href="//instagram.com/{{ settings.instagram_id }}" target="_blank" aria-label="Instagram">
+    <li class="social-icon-list">
+      <a href="{{ settings.instagram_id }}" target="_blank" aria-label="Instagram">
         {% render 'snip-icons',
            wrapper: wrapper,
            type: 'social',
@@ -104,7 +104,7 @@
 {% endif %}
 
 {% if settings.snapchat_id != blank %}
-  <li>
+  <li class="social-icon-list">
     <a href="//snapchat.com/add/{{ settings.snapchat_tid }}" target="_blank" aria-label="Snapchat">
       {% render 'snip-icons',
          wrapper: wrapper,
@@ -119,7 +119,7 @@
 {% endif %}
 
 {% if settings.tiktok != blank %}
-  <li>
+  <li class="social-icon-list">
     <a href="{{ settings.tiktok }}" target="_blank" aria-label="Tiktok">
       {% render 'snip-icons',
        wrapper: wrapper,
@@ -134,7 +134,7 @@
 {% endif %}
 
 {% if settings.etsy != blank %}
-  <li>
+  <li class="social-icon-list">
     <a href="{{ settings.etsy }}" target="_blank" aria-label="Etsy">
       {% render 'snip-icons',
        wrapper: wrapper,
