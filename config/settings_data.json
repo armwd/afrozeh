@@ -411,6 +411,7 @@
     "show_collection_swatches": true,
     "show_collection_sizes": false,
     "quickadd": true,
+    "quickadd_quantity": true,
     "color_swatch_style": "variant-image",
     "sale_items": "percentage",
     "show_shipping_note": true,
