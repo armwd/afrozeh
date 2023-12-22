@@ -8,7 +8,7 @@
     },
     "mobile_nav": {
       "account": "Cuenta",
-      "login": "Iniciar sesión/Crear cuenta",
+      "login": "Iniciar sesión\/Crear cuenta",
       "logout": "Cerrar Sesión"
     },
     "password_page": {
@@ -197,7 +197,7 @@
       "filter_by_label": "Filtrar {{ count }} resultados para \"{{ terms }}\" por",
       "filter_button": "Filtrar",
       "filters_selected": "{{ count }} seleccionados",
-      "use_fewer_filters_html": "Use menos filtros o <a class=\"{{ class }}\" href=\"{{ link }}\">borre todo</a>",
+      "use_fewer_filters_html": "Use menos filtros o <a class=\"{{ class }}\" href=\"{{ link }}\">borre todo<\/a>",
       "type_to_filter": "Escriba para filtrar",
       "suggestions": "Sugerencias"
     },
@@ -225,7 +225,7 @@
       "filters_selected": "{{ count }} seleccionados",
       "sort_by_placeholder": "Relevancia",
       "to": "A",
-      "use_fewer_filters_html": "Use menos filtros o <a class=\"{{ class }}\" href=\"{{ link }}\">borre todo</a>",
+      "use_fewer_filters_html": "Use menos filtros o <a class=\"{{ class }}\" href=\"{{ link }}\">borre todo<\/a>",
       "type_to_filter": "Escriba para filtrar",
       "match_all": "Seleccionar todos"
     },
@@ -262,7 +262,7 @@
       "city": "Ciudad",
       "country": "País",
       "province": "Provincia",
-      "zip": "Código postal/ZIP",
+      "zip": "Código postal\/ZIP",
       "phone": "Teléfono",
       "set_default": "Establecer como dirección predeterminada",
       "add": "Añadir dirección",

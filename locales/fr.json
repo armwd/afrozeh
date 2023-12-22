@@ -196,7 +196,7 @@
       "filter_by_label": "Filtrer {{ count }} résultats pour \"{{ terms }}\" par",
       "filter_button": "Filtre",
       "filters_selected": "{{ count }} sélectionnés",
-      "use_fewer_filters_html": "Utilisez moins de filtres ou <a class=\"{{ class }}\" href=\"{{ link }}\">effacez tout</a>",
+      "use_fewer_filters_html": "Utilisez moins de filtres ou <a class=\"{{ class }}\" href=\"{{ link }}\">effacez tout<\/a>",
       "type_to_filter": "Tapez à filtrer",
       "suggestions": "Suggestions"
     },
@@ -224,7 +224,7 @@
       "filters_selected": "{{ count }} sélectionnés",
       "sort_by_placeholder": "Pertinence",
       "to": "à",
-      "use_fewer_filters_html": "Utilisez moins de filtres ou <a class=\"{{ class }}\" href=\"{{ link }}\">effacez tout</a>",
+      "use_fewer_filters_html": "Utilisez moins de filtres ou <a class=\"{{ class }}\" href=\"{{ link }}\">effacez tout<\/a>",
       "type_to_filter": "Tapez à filtrer",
       "match_all": "Tout associer"
     },
@@ -237,7 +237,7 @@
       "title": "Détails du compte",
       "details": "Détails du compte",
       "link": "Adresse principale",
-      "returns_content": "Retour / échange",
+      "returns_content": "Retour \/ échange",
       "view_addresses": "Afficher les adresses"
     },
     "activate_account": {
@@ -360,7 +360,7 @@
       "more_available": "Plus de {{ product_options }} disponible(s)",
       "features": "Caractéristiques clés",
       "required": "Obligatoire",
-      "details":"détail",
+      "details": "détail",
       "sold_out": "Épuisé",
       "from_lowest_price_html": "de {{ lowest_price }}",
       "unavailable": "Non disponible",

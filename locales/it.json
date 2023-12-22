@@ -3,12 +3,12 @@
     "customer": {
       "my_account": "Account",
       "logout": "Esci",
-      "login": "Accedi/Crea account",
+      "login": "Accedi\/Crea account",
       "create_account": "Crea account"
     },
     "mobile_nav": {
       "account": "Account",
-      "login": "Accedi/Crea account",
+      "login": "Accedi\/Crea account",
       "logout": "Esci"
     },
     "password_page": {
@@ -109,8 +109,8 @@
   },
   "cart": {
     "general": {
-      "title": "Carello",      
-      "at_checkout": "calcolata al check out",
+      "title": "Carello",
+      "at_checkout": "Calcolato alla cassa",
       "empty": "il tuo carrello è vuoto",
       "product": "Prodotto",
       "price": "Prezzo",
@@ -130,13 +130,12 @@
       "free_shipping_after": "lontano dalla spedizione nazionale gratuita!",
       "free_shipping_qualified": "Il tuo ordine si qualifica per la spedizione nazionale gratuita!",
       "free_shipping_exclusions": "(Escluso internazionale)",
-      "items": "Articolo/i",
+      "items": "Articolo\/i",
       "cart_error": "Errore carrello",
       "form_error": "Errore modulo",
       "update_qty_error": "Alcuni articoli non sono più disponibili. Aggiorna la quantità e riprova",
       "tax": "Tasse",
       "shipping": "Spedizione",
-      "at_checkout": "Calcolato alla cassa",
       "shipping_no_destination": "Non effettuiamo spedizioni a questa destinazione.",
       "shipping_single_rate": "C'è una tariffa di spedizione disponibile per ",
       "shipping_multi_rate_one": "Ci sono ",
@@ -193,7 +192,7 @@
       "filter_by_label": "Filtro {{ count }} risultati per \"{{ terms }}\" di",
       "filter_button": "Filtro",
       "filters_selected": "{{ count }} selezionato",
-      "use_fewer_filters_html": "Nessun risultato. Usa meno filtri o <a class=\"{{ class }}\" href=\"{{ link }}\">Cancella tutto</a>",
+      "use_fewer_filters_html": "Nessun risultato. Usa meno filtri o <a class=\"{{ class }}\" href=\"{{ link }}\">Cancella tutto<\/a>",
       "type_to_filter": "Digita per filtrare",
       "suggestions": "Suggerimenti"
     },
@@ -269,7 +268,7 @@
     },
     "login": {
       "title": "Accedi",
-      "logout":"Disconnettersi",
+      "logout": "Disconnettersi",
       "email": "Indirizzo email",
       "password": "Password",
       "forgot_password": "Hai dimenticato la password?",

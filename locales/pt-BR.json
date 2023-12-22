@@ -8,7 +8,7 @@
     },
     "mobile_nav": {
       "account": "Conta",
-      "login": "Entrar/Criar conta",
+      "login": "Entrar\/Criar conta",
       "logout": "SAIR"
     },
     "password_page": {
@@ -197,7 +197,7 @@
       "filter_by_label": "Filtre {{ count }} resultados para \"{{ terms }}\" por",
       "filter_button": "Filtro",
       "filters_selected": "{{ count }} selecionados",
-      "use_fewer_filters_html": "Use menos filtros ou <a class=\"{{ class }}\" href=\"{{ link }}\">limpe todos</a>",
+      "use_fewer_filters_html": "Use menos filtros ou <a class=\"{{ class }}\" href=\"{{ link }}\">limpe todos<\/a>",
       "type_to_filter": "Digite para filtrar",
       "suggestions": "Sugestões"
     },
@@ -238,7 +238,7 @@
       "title": "Conta",
       "details": "Detalhes da conta",
       "link": "Voltar para a conta",
-      "returns_content": "Devolução / Troca",
+      "returns_content": "Devolução \/ Troca",
       "view_addresses": "Ver endereços"
     },
     "activate_account": {
@@ -262,7 +262,7 @@
       "city": "Cidade",
       "country": "País",
       "province": "Província",
-      "zip": "CEP/Código postal",
+      "zip": "CEP\/Código postal",
       "phone": "Telefone",
       "set_default": "Definir como endereço padrão",
       "add": "Adicionar endereço",

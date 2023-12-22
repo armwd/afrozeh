@@ -8,7 +8,7 @@
     },
     "mobile_nav": {
       "account": "Konto",
-      "login": "Einloggen / Konto erstellen",
+      "login": "Einloggen \/ Konto erstellen",
       "logout": "Ausloggen"
     },
     "password_page": {
@@ -197,7 +197,7 @@
       "filter_by_label": "{{ count }} Ergebnisse für \"{{ terms }}\" filtern nach",
       "filter_button": "Filter",
       "filters_selected": "{{ count }} ausgewählt",
-      "use_fewer_filters_html": "Verwenden Sie weniger Filter oder <a class=\"{{ class }}\" href=\"{{ link }}\">löschen Sie alle</a>",
+      "use_fewer_filters_html": "Verwenden Sie weniger Filter oder <a class=\"{{ class }}\" href=\"{{ link }}\">löschen Sie alle<\/a>",
       "type_to_filter": "Zum Filtern eingeben",
       "suggestions": "Vorschläge"
     },
@@ -237,7 +237,7 @@
     "account": {
       "title": "Konto",
       "link": "Zurück zum Konto",
-      "returns_content": "Rückgabe / Umtausch",
+      "returns_content": "Rückgabe \/ Umtausch",
       "details": "Kontodetails",
       "view_addresses": "Adressen ansehen"
     },
@@ -363,7 +363,7 @@
       "more_available": "Mehr {{ product_options }} verfügbar",
       "features": "Hauptmerkmale",
       "required": "Erforderlich",
-      "details":"Detail",
+      "details": "Detail",
       "sold_out": "Ausverkauft",
       "from_lowest_price_html": "von {{ lowest_price }}",
       "unavailable": "Nicht erhältlich",

@@ -26,10 +26,6 @@
 <footer id="footer">
   <div class="row grid__wrapper">
     {% for block in section.blocks %}
-    <div class="{{ column_width }} footer-sect"
-        data-aos="fade"
-        data-aos-delay="{{ forloop.index | times: 100 }}">
-
       {% case block.type %}
       {% when 'menu' %}
         <div class="{{ column_width }} footer-sect">
@@ -107,9 +103,7 @@
   </div>
   <div class="clear"></div>
   <div id="bottom-footer" class="sub-footer row grid__wrapper">
-    <div class="footer-left"
-      data-aos="fade"
-      data-aos-delay="{{ forloop.index | times: 100 }}">
+    <div class="footer-left">
       {% if section.settings.show_social_icons %}
         <ul id="social-links">
           {% render 'social-icons', wrapper: '.footer-left', fill_color: 'var(--footer-color)', hover_color: 'var(--footer-color)' %}
@@ -121,14 +115,12 @@
         </div>
       {%- endif -%}
       <p class="copyright-text">
-        {% if section.settings.show_copyright %}<a href="{{ routes.root_url }}">
+        {% if section.settings.show_copyright %}<a href="{{ routes.root_url }}" >
           &copy; {{ 'now' | date: "%Y" }} {{ shop.name }}
-        </a>{% endif %}Powered By <a href="https://hivemetrics.com.pk/" target="_blank">Hive Metrics</a>
+        </a> {% endif %}Powered By <a href="https://hivemetrics.com.pk/" target="_blank">Hive Metrics</a>
       </p>
     </div>
-    <div id="payment" class="footer-right"
-      data-aos="fade"
-      data-aos-delay="{{ forloop.index | times: 100 }}">
+    <div id="payment" class="footer-right">
       {% if locale_selector or country_selector %}
         <div class="disclosures">
             {%- if locale_selector -%}
@@ -207,11 +199,6 @@
                 {%- form 'localization', id: 'FooterCountryForm', class: 'selectors-form', data-disclosure-form: '' -%}
                 <div class="disclosure" data-disclosure-currency>
                   <button type="button" class="disclosure__toggle" aria-expanded="false" aria-controls="currency-list" aria-describedby="currency-heading" data-disclosure-toggle>
-                    {% if section.settings.show_flag %}
-                      <span class="country--flag">
-                        {{ localization.country.name | image_url: width: 32 | image_tag: class: 'disclosure__toggle__flag', loading: 'lazy', alt: country.name }}
-                      </span>
-                    {% endif %}
                     {{ localization.country.name }} ({{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }})
                   </button>
                   <ul id="currency-list" class="disclosure-list" data-disclosure-list>
@@ -455,12 +442,6 @@
       "type": "checkbox",
       "id": "show_country_selector",
       "label": "Enable country/region selector",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_flag",
-      "label": "Show country flags",
       "default": true
     }
   ],
