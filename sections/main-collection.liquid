@@ -55,8 +55,6 @@
     assign desc_width = 'span-12'
   endif
 
-  assign aos_mod = section.settings.grid | plus: 0
-
 -%}
 
 <section class="collection__page row grid__wrapper section-{{ section.id }} global__section"
@@ -66,7 +64,7 @@ data-collection-link="{{ collection_link }}">
 
   {% paginate collection.products by product_limit %}
     <div id="CollectionProductGrid" class="span-12 auto grid__wrapper grid__wrapper-nest gr0">
-
+      
       {%- if section.settings.description_position == 'top' -%}
         <div class="collection__page-description {{ desc_width }} sm-span-12 auto">
           <div class="rte">
@@ -78,16 +76,14 @@ data-collection-link="{{ collection_link }}">
             {%
               render 'basic-responsive-image',
               type: collection.image,
-              width: 350,
-              loading: 'eager',
-              fetchpriority: 'high'
+              width: 350
             %}
           </div>
         {%- endif -%}
       {%- endif -%}
 
       {%- if horizontal_filtering_enabled or horizontal_sort -%}
-        <form id="CollectionFiltersForm" class="span-12 md-span-12 auto" data-collection-filters>
+        <form id="CollectionFiltersForm" class="span-12 auto" data-collection-filters>
           {% render 'collection-horizontal-toolbar',
             collection: collection,
             block: block,
@@ -97,13 +93,13 @@ data-collection-link="{{ collection_link }}">
       {%- endif -%}
 
       {% if show_sidebar %}
-        <form id="CollectionSidebarFiltersForm" class="span-3 md-span-12 sm-span-12 auto" data-collection-sidebar-filters>
+        <form id="CollectionSidebarFiltersForm" class="span-3 sm-span-12 auto" data-collection-sidebar-filters>
           {% render 'collection-sidebar',
             collection: collection, block: block %}
         </form>
       {% endif %}
 
-      {% if show_sidebar %}<div class="collection__page--productContent span-9 md-span-12 sm-span-12 auto">{% endif %}
+      {% if show_sidebar %}<div class="collection__page--productContent span-9 sm-span-12 auto">{% endif %}
 
         {% if filter_count > 0 %}
           <div class="filtering__results span-12 auto js-filters-reset">
@@ -130,7 +126,7 @@ data-collection-link="{{ collection_link }}">
             </ul>
           </div>
         {% endif %}
-<div class="thumbnail-chnager__wrapper">
+       <div class="thumbnail-chnager__wrapper">
           {% render 'thumbnail-changer', column_number: section.settings.columns_desktop %}
        </div>
         {%- if collection.products.size >= 1 -%}
@@ -139,27 +135,10 @@ data-collection-link="{{ collection_link }}">
           data-aos="fade"
           data-id="{{ section.id }}">
             {% for product in collection.products %}
-              <div id="product-listing-{{ product.id }}" 
-                class="item product-index collection__page-product js-product-listing"
-                data-alpha="{{ product.title }}" 
-                data-product-id="{{ product.id }}" 
-                data-price="{{ product.price }}"
-                data-aos="fade"
-                data-aos-delay="{{ forloop.index | minus: 1 | modulo: aos_mod | times: 100 }}">
-                {% liquid
-                  # grid
-                  assign loading = 'lazy'
-                  assign fetch_priority = 'auto'
-                  if forloop.index <= grid
-                    assign loading = 'eager'
-                    assign fetch_priority = 'high'
-                  endif
-                 %}
+              <div id="product-listing-{{ product.id }}" class="item product-index collection__page-product js-product-listing" data-alpha="{{ product.title }}" data-product-id="{{ product.id }}" data-price="{{ product.price }}">
                 {% render 'product-listing',
                   product: product,
-                  collection: collection,
-                  loading: loading,
-                  fetchpriority: fetch_priority %}
+                  collection: collection %}
               </div>
             {% endfor %}
 
