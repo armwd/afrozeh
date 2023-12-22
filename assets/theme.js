@@ -285,6 +285,9 @@ WAU.Slideout = (function () {
 		const slideoutClosers = document.querySelectorAll('.js-slideout-close'),
 					slideoutOpener = document.querySelector('.js-slideout-open[data-wau-slideout-target="' + name + '"]'),
 					slideoutDirection = slideoutOpener.getAttribute('data-slideout-direction');
+          //slideoutDirection = slideoutOpener?.getAttribute('data-slideout-direction');   //updated theme condition
+
+    if (!slideoutClosers || !slideoutOpener) return;
 
 		let slideoutTargetEl = undefined;
 
@@ -793,6 +796,102 @@ WAU.Accordion = (function () {
   return publicAPIs;
 
 })();
+
+/**
+ * Product Grid Quick Add module.
+ * @param  {Object} Exports object
+ */
+WAU.ProductGridQuickAdd = (function(exports) {
+  "use strict";
+
+  const selectors = {
+    swatch: '.js-collection-swatch',
+    listing: '.js-product-listing',
+    image: '.reveal img',
+    container: '.prod-container'
+  };
+
+  const classes = {
+    active: 'prod-container__active'
+  };
+
+  /**
+   * @description Handle click event.
+   * @typedef {object} MouseEvent
+   * @param  {MouseEvent} event Event object.
+   */
+  function _handleClick(event) {
+
+    // Bail if no Event object.
+    if (!event || !event.target) {
+      return;
+    }
+
+    const isCollectionSwatch = event.target.matches(selectors.swatch);
+
+    // Bail if not a collection swatch.
+    if (!isCollectionSwatch) {
+      return;
+    }
+
+    const swatchImage = event.target.getAttribute('data-href');
+    const productImage = event.target.closest(selectors.listing)?.querySelector(selectors.image);
+
+    // Bail if no product or product image.
+    if (!productImage) {
+      return;
+    }
+
+    // Change image src attribute.
+    if (swatchImage !== productImage.srcset) {
+      productImage.srcset = swatchImage;
+    }
+  }
+
+  /**
+   * @description Handle the Add to Cart interaction.
+   * @param  {Object} event Event object.
+   */
+  function _handleAddToCart(event) {
+
+    // Get product container
+    const productContainer = event.target.closest(selectors.container);
+
+    // Bail if no Event object or Event Target.
+    if (!event || !event.target || !productContainer) {
+      return;
+    }
+
+    productContainer.classList.add(classes.active);
+
+    // TODO: Use a JS promise?
+    setTimeout(() => {
+      productContainer.classList.remove(classes.active);
+    }, 5000);
+  }
+
+  /**
+   * @description Initialize by adding event handler.
+   */
+  function init() {
+    document.addEventListener('click', _handleClick);
+    Events.on("quickadd:add-to-cart", _handleAddToCart);
+  }
+
+  /**
+   * @description Remove event handling.
+   */
+  function destroy() {
+    document.removeEventListener('click', _handleClick);
+    Events.removeListener("quickadd:add-to-cart", _handleAddToCart);
+  }
+
+  exports.init = init;
+  exports.destroy = destroy;
+
+  return exports;
+
+})({});
 
 WAU.ProductGridVideo = {
   init: function init() {
@@ -2162,6 +2261,10 @@ Shopify.theme.ajaxCart = {
       element.addEventListener('click', function (e) {
         e.preventDefault();
 
+        if (event.target.hasAttribute('data-quick-add')) {
+          Events.trigger("quickadd:add-to-cart", event);
+        }
+
         var addToCartForm = this.closest('form');
         Shopify.theme.ajaxCart.addToCart(addToCartForm, element.parentNode, config, false);
 
@@ -2451,6 +2554,7 @@ Shopify.theme.ajaxCart = {
     }
 
     // Check line item properties required
+    //if (theme.ProductProperties.checkLineItemProperties(addToCartForm) === false) return;   //Code of updated theme
     if (addToCartForm.elements.length > 0) {
 
       // Get the required "custom property" fields
@@ -2496,7 +2600,13 @@ Shopify.theme.ajaxCart = {
       Shopify.theme.cart.getCart().then(Cart => {
 
         if ( isQuickview && config.cart_added_event != 'product_page') {
-          Shopify.theme.quickview.hideModal();
+          if ( document.querySelector('[data-wau-modal="quickview"]') ) {
+            // Hide modal
+            Shopify.theme.quickview.hideModal();
+          } else {
+            // Hide slideout
+            Shopify.theme.quickview.hideSlideout();
+          }
         } else if ( isQuickview && config.cart_added_event == 'product_page') {
           theme.Helpers.fadeIn(context.querySelector(selectors.cartAddedMsg));
 
@@ -2589,6 +2699,27 @@ Shopify.theme.ajaxCart = {
   updateView: function updateView(config, Cart) {
     let data, url;
     url = config.cart_url + '/?view=ajax';
+
+    function showHideExpressCheckoutButtons() {
+
+      // Get the footer wrapper element.
+      let footerWrapperEl = document.querySelector('#dynamic');
+
+      // Bail if no footer wrapper element.
+      if (!footerWrapperEl) return;
+
+      // If we have less than 1 item in the cart (0) then
+      // hide the cart footer element. Otherwise display it
+      // as normal.
+      if (Cart.item_count < 1) {
+        footerWrapperEl.style.display = 'none';
+      } else {
+        footerWrapperEl.style.display = 'block';
+      }
+    }
+
+    // Invoke the function.
+    showHideExpressCheckoutButtons();
 
     fetch(url, data)
     .then(res => res.text())
@@ -2849,7 +2980,13 @@ Shopify.theme.quickview = {
         event.preventDefault();
 
         // Init modal
-        WAU.Modal.init("quickview");
+        if ( document.querySelector('[data-wau-modal="quickview"]') ) {
+          // Init modal
+          WAU.Modal.init("quickview");
+        } else {
+          // Init slideout
+          WAU.Slideout.init("quickview");
+        }
 
         // Get template
         var productUrl = this.dataset.productUrl,
@@ -2881,11 +3018,21 @@ Shopify.theme.quickview = {
 
     WAU.Modal._openByName("quickview");
   },
+  showSlideout: function showModal() {
+
+    WAU.Slideout._openByName("quickview");
+  },
   hideModal: function hideModal() {
 
     document.querySelector('.js-quickview-content').innerHTML = '';
 
     WAU.Modal._closeByName("quickview");
+  },
+  hideSlideout: function hideModal() {
+
+    document.querySelector('.js-quickview-content').innerHTML = '';
+
+    WAU.Slideout._closeByName("quickview");
   },
   cleanUrl: function cleanUrl(url, key) {
     return url.split('?')[0] + '?view=quick';
@@ -2937,8 +3084,13 @@ Shopify.theme.quickview = {
       });
     }).then(response => {
 
-      // Show modal
-      Shopify.theme.quickview.showModal();
+      if ( document.querySelector('[data-wau-modal="quickview"]') ) {
+        // Show modal
+        Shopify.theme.quickview.showModal();
+      } else {
+        // Show modal
+        Shopify.theme.quickview.showSlideout();
+      }
 
     })
     .catch(error => {
@@ -2996,7 +3148,56 @@ theme.AnnouncementBar = (function() {
       }
     }
   });
+
+  function AnnouncementCarousel() {
+
+    const announcements = document.querySelectorAll('.js-announcement-carousel');
+    if (!announcements) return false;
+
+    announcements.forEach(Carousel => {
+      const flktyData = Carousel.getAttribute('data-flickity');
+      const flktyOptions = JSON.parse(flktyData);
+      new Flickity(Carousel, flktyOptions);
+    });
+  }
+
+  document.addEventListener('shopify:section:unload', function(event) {
+    const Carousel = event.target.closest('.js-announcement-carousel');
+    if (!Carousel) {
+      return false;
+    }
+    const flkty = Flickity.data(Carousel);
+    flkty.destroy();
+  });
+
+  document.addEventListener('shopify:block:select', function(event) {
+    const Carousel = event.target.closest('.js-announcement-carousel');
+    if (!Carousel) {
+      return false;
+    }
+    const flkty = Flickity.data(Carousel);
+    const Slide = event.target.getAttribute('data-slider-index');
+    flkty.select(Slide);
+    flkty.pausePlayer();
+  });
+
+  document.addEventListener('shopify:section:select', function(event) {
+    AnnouncementCarousel(); // Reinitialize the carousel when a section is selected
+  });
+
+  document.addEventListener('shopify:section:deselect', function(event) {
+    const Carousel = event.target.closest('.js-announcement-carousel');
+    if (!Carousel) {
+      return false;
+    }
+    const flkty = Flickity.data(Carousel);
+    flkty.destroy(); // Destroy the carousel when a section is deselected
+  });
+
+  document.addEventListener('shopify:section:load', AnnouncementCarousel);
+  
   return Announcement;
+
 })();
 
 theme.Header = (function() {
@@ -3206,9 +3407,26 @@ theme.Slideshow = (function() {
     slideshows.forEach(Slideshow => {
       const flktyData = Slideshow.getAttribute('data-flickity');
       const flktyOptions = JSON.parse(flktyData);
-        new Flickity(Slideshow, flktyOptions);
-    });
+      const flkty = new Flickity(Slideshow, flktyOptions);
+      if (Slideshow.hasAttribute('data-enable-stop-pause-on-mobile') && Slideshow.getAttribute('data-enable-stop-pause-on-mobile') === 'true') {
+        if (window.matchMedia('(max-width: 740px)').matches) {
 
+          function pausePlayer(event) {
+            flkty.pausePlayer();
+          }
+
+          function playPlayer(event) {
+            flkty.playPlayer();
+          }
+
+          flkty.viewport.addEventListener('touchstart', pausePlayer);
+          flkty.viewport.addEventListener('touchmove', pausePlayer);
+          flkty.viewport.addEventListener('touchend', playPlayer);
+
+        }
+      }
+
+    });
   }
 
   return Slideshow;
@@ -3443,6 +3661,10 @@ theme.Parallax = (function() {
     const sectionId = container.getAttribute('data-section-id');
     const Scale = container.dataset.scale;
     const image = container.querySelectorAll('img');
+
+    if (!image) {
+      return false;
+    }
 
     const initParallaxSection = function(ParallaxSection) {
       new simpleParallax(image, {
@@ -3730,6 +3952,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   (function scrollUp(){
     var target = document.querySelector("footer");
+    if (!target) return;
 
     var scrollToTopBtn = document.querySelector(".scrollup")
     if (!scrollToTopBtn) return;
@@ -3880,6 +4103,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
       open() {
         WAU.ProductGridVideo.init();
+        Shopify.theme.ajaxCart.init();
         if (typeof theme.Helpers.fadeIn === 'function') {
           theme.Helpers.fadeIn(this.predictiveSearchResults);
         } else {
@@ -4303,7 +4527,7 @@ theme.ProductForm = function (context, sectionId, events, Product) {
         Shopify.theme.quickview.init();
         Shopify.theme.ajaxCart.init();
 
-        // Initialize Flickity
+// Initialize Flickity
         if (limit > 3) {
           initFlickity();
         }
@@ -4524,6 +4748,11 @@ theme.ProductQty = function(context, events) {
   var elements = context.querySelectorAll(".product-qty, .formQty");
 
   elements.forEach((element, i) => {
+    element.addEventListener('change', (event) => {
+      elements.forEach((element) => {
+        element.value = parseInt(event.target.value);
+      });
+    });
     events.on("quantitycontrol:click", change);
 
     function change(value) {
@@ -4553,7 +4782,7 @@ theme.ProductQty = function(context, events) {
     });
   }
 }
-
+/* ====================Custom code================== */
 theme.ProductProperties = function(context) {
   var elements = context.querySelectorAll("[data-product-property]");
 
@@ -4572,6 +4801,157 @@ theme.ProductProperties = function(context) {
 
   });
 }
+/* ========================================================= */
+/**
+ * Product Line Item Properties/Product Customization blocks
+ * @param  {Object} Public API
+ */
+theme.ProductProperties = (function(exports) {
+  'use strict';
+
+  const classes = {
+    filled: 'is__filled',
+    error: 'required-error'
+  };
+
+  const selectors = {
+    customizationInput: '[data-product-property]',
+    error: '.required-error'
+  };
+
+  /**
+   * Update the value of the line item property using valid syntax.
+   * @param  {[type]} value [description]
+   * @param  {[type]} i     [description]
+   * @return {[type]}       [description]
+   */
+  function _updateValue(value, i) {
+    let current = value.split("properties[")[1].split("]")[0];
+    let newValue = `${current}${i}`;
+    return `properties[${newValue}]`;
+  }
+
+  /**
+   * Update each line item properties/product customization so that they have a unique value.
+   * @param  {[type]} addToCartForm [description]
+   * @return {[type]}               [description]
+   */
+  function _fixDuplicateNameValues(addToCartForm) {
+    const elements = [...addToCartForm.elements].filter(element => {
+      return element.hasAttribute('data-product-property');
+    });
+
+    if (!elements) {
+      console.error('Error. No elements.');
+      return;
+    }
+
+    const arr = [];
+    let j = 0;
+    let current;
+
+    elements.forEach((element) => {
+      arr.push(element.getAttribute("name"));
+    });
+
+    elements.forEach((element, i) => {
+      let name = element.getAttribute('name');
+      if (current != name) {
+        current = name;
+      } else {
+        elements[i].setAttribute('name', _updateValue(name, j++));
+      }
+    });
+  };
+
+  /**
+   * Scrolls to the first error message.
+   * @return {[type]} [description]
+   */
+  function _scrollToFirstError(form) {
+
+    if (typeof window.scrollTo !== 'function') return;
+
+    const firstErrorInput = form ? form.querySelector(selectors.error) : document.querySelector(selectors.error);
+
+    if (firstErrorInput) {
+      const coords = firstErrorInput.getBoundingClientRect();
+      window.scrollTo({
+        top: coords.y,
+        left: coords.x,
+        behavior: 'smooth'
+      });
+    }
+  }
+
+  //
+  // Public methods
+  //
+
+  /**
+   * Initialize
+   * @param  {Object} context Product context.
+   * @param  {Object} events  Events handler.
+   */
+  function init(context, events) {
+    var elements = context.querySelectorAll(selectors.customizationInput);
+
+    elements.forEach((element, i) => {
+
+      element.addEventListener("blur", (event) => {
+
+        if (event.target.value != "") {
+          event.target.classList.add(classes.filled)
+        } else {
+          event.target.classList.remove(classes.filled)
+        }
+      });
+
+    });
+  }
+
+  /**
+   * Check line item properties/product customizations
+   * @param  {HTMLElement} addToCartForm Product form.
+   */
+  function checkLineItemProperties(addToCartForm) {
+
+    if (addToCartForm.elements.length > 0) {
+
+      _fixDuplicateNameValues(addToCartForm);
+
+      const requiredFields = [...addToCartForm.elements].filter((element) => {
+        return element.hasAttribute('data-product-property') && element.required;
+      });
+
+      if (requiredFields.length > 0) {
+
+        let required = false;
+
+        requiredFields.forEach((requiredField) => {
+
+          requiredField.classList.remove(classes.error);
+
+          if (requiredField.value === '') {
+
+            required = true;
+
+            requiredField.classList.add(classes.error);
+          }
+        });
+
+        _scrollToFirstError(addToCartForm);
+
+        if (required) return false;
+      }
+    };
+  }
+
+  exports.init = init;
+  exports.checkLineItemProperties = checkLineItemProperties;
+
+  return exports
+})({});
 
 theme.ProductTabs = function (context) {
 
@@ -5402,6 +5782,7 @@ theme.Product = (function () {
 
     if (context.querySelectorAll("[data-product-property]").length) {
       theme.ProductProperties(context);
+      //theme.ProductProperties.init(context, events);        //Code of updated theme
     }
 
     if ( context.querySelector("[data-product-qty]") ) {
@@ -5418,6 +5799,12 @@ theme.Product = (function () {
 
     if (context.querySelector('[data-wau-modal-content="popup-content"]')) {
       WAU.Modal.init("popup-content");
+    }
+
+    if (context.querySelector('[data-wau-modal-content]')) {
+      context.querySelectorAll('[data-wau-modal-content]')?.forEach((modal) => {
+        WAU.Modal.init(modal.getAttribute('data-wau-modal-content'));
+      });
     }
 
     // Find all the modals and initialize them
@@ -5462,6 +5849,7 @@ theme.Product = (function () {
 
 theme.ProductRecommendations = (function () {
   function ProductRecommendations() {
+
     var loadProductRecommendationsIntoSection = function() {
       // Look for an element with class 'product-recommendations'
       var container = document.querySelector(".js-product-rec-wrapper");
@@ -5489,8 +5877,11 @@ theme.ProductRecommendations = (function () {
         container.innerHTML = container.firstElementChild.innerHTML;
 
         Shopify.theme.quickview.init();
+        Shopify.theme.ajaxCart.init();
         WAU.ProductGridVideo.init();
+
       });
+
     }
 
     document.addEventListener("shopify:section:select", function(event) {
@@ -5519,6 +5910,7 @@ theme.GiftCardRecipient = function (context, sectionId, events, Product) {
   hiddenField.disabled = true;
   const form = container.closest('.js-prod-form-submit');
   const formSubmitButton = form.querySelector('.js-ajax-submit');
+  const defaultErrorMessage = context.querySelector('.js-error-msg').innerHTML;
 
   form.addEventListener('change', handleChange);
 
@@ -5575,6 +5967,11 @@ theme.GiftCardRecipient = function (context, sectionId, events, Product) {
       return;
     }
     errorMessage.innerHTML = `<b>${config.form_error}</b> ${title}`;
+
+    // Set back to default
+    setTimeout(() => {
+      errorMessage.innerHTML = defaultErrorMessage;
+    }, 4000)
   }
 
   Events.on('recipientform:errors', function(title, body, config, addToCartForm) {
@@ -5654,6 +6051,7 @@ theme.StoreAvailability = function(context, Product, events) {
       storeAvailabilityModalProductTitle.textContent = title;
 
     });
+
   }
 }
 
@@ -7233,6 +7631,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
   if ( document.querySelectorAll('.js-bg-video-wrapper') ) {
     WAU.ProductGridVideo.init();
   }
+  const isQuickAddEnabled = document.body.getAttribute('data-quick-add-enabled') === 'true' ? true : false;
+  if (isQuickAddEnabled) {
+    console.log('supported');
+    WAU.ProductGridQuickAdd.init();
+  }
 });
 
 /*======================================================
@@ -7536,6 +7939,10 @@ theme.ContactSection = (function() {
   // Get the form
   const form = document.querySelector("#contact_form");
 
+  if (!form) {
+    return false;
+  }
+
   // Check if there are form inputs
   if (form.elements.length > 0) {
     // Convert nodelist to an array
@@ -7772,6 +8179,229 @@ theme.CustomerLogin = (function() {
   return CustomerLogin;
 })();
 
+/*======================================================
+  Filter & Search
+========================================================*/
+theme.FilterAndSearch = (function() {
+
+  function FilterAndSearch(container) {
+
+    if (!customElements.get('wau-filter-search')) {
+      customElements.define('wau-filter-search', class FilterAndSearch extends HTMLElement {
+
+        constructor() {
+          super();
+        };
+
+        connectedCallback() {
+
+          this.elements = {
+            form: this.querySelector('form'),
+            collectionFilter: this.querySelector('#collection'),
+            firstFilter: this.querySelector('#filter1'),
+            secondFilter: this.querySelector('#filter2'),
+            submitButton: this.querySelector('.js-submit'),
+          }
+          this.filter_count_enabled = this.getAttribute('data-show-filter-count') === 'true' ? true : false;
+          this._handleCollectionChange = this._handleCollectionChange.bind(this);
+          this._removeOptions = this._removeOptions.bind(this);
+          this._appendOptions = this._appendOptions.bind(this);
+          this._getResponse = this._getResponse.bind(this);
+          this._processHTML = this._processHTML.bind(this);
+          this._handleSubmit = this._handleSubmit.bind(this);
+          this._handleFilterChange = this._handleFilterChange.bind(this);
+          this._processFilterHTML = this._processFilterHTML.bind(this);
+          this._handleError = this._handleError.bind(this);
+
+          this.elements.collectionFilter.addEventListener('change', this._handleCollectionChange);
+          if (this.elements.firstFilter) this.elements.firstFilter.addEventListener('change', this._handleFilterChange);
+          if (this.elements.secondFilter) this.elements.secondFilter.addEventListener('change', this._handleFilterChange);
+          this.elements.submitButton.addEventListener('click', this._handleSubmit);
+        };
+
+        disconnectedCallback() {
+          this.elements.collectionFilter.removeEventListener('change', this._handleCollectionChange);
+          this.elements.firstFilter.removeEventListener('change', this._handleFilterChange);
+          this.elements.submitButton.removeEventListener('click', this._handleSubmit);
+        };
+
+
+        _handleFilterChange(event) {
+
+          if (!event) return false;
+
+          const target = event.target;
+
+          if (!target.matches('#filter2')) {
+            this._removeOptions(this.elements.secondFilter);
+          }
+
+          const firstFilterValue = this._getFilterValue(this.elements.form.filter1);
+
+          if (!target.matches('#filter1')) {
+            var url = `${this.elements.form.collection.value}?${(firstFilterValue ? firstFilterValue + '&' : '' )}${target.value}&view=filters`;
+          } else {
+            var url = `${this.elements.form.collection.value}?${target.value}&view=filters`;
+          }
+
+          fetch(url)
+            .then(this._getResponse)
+            .then(this._processFilterHTML)
+            .catch(this._handleError);
+        };
+
+
+        _updateSubmitButton(element, value) {
+          if (!element || !value || value.length <= 0) return;
+          return element.value = value;
+        };
+
+
+        _processFilterHTML(html) {
+
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          const options = doc.querySelectorAll(`option`);
+          const secondOptions = this._getOptions(options, this.dataTagTwo);
+          const submitButtonValue = doc.querySelector('.js-submit').value;
+
+          if (this.filter_count_enabled) {
+            this._updateSubmitButton(this.elements.submitButton, submitButtonValue);
+          }
+          if (this.elements.secondFilter.options.length == 1) {
+            this._appendOptions(secondOptions, this.elements.secondFilter);
+          }
+        };
+
+
+        _updateDefaultOption(dropdown, value) {
+          if (!dropdown) return;
+          const element = dropdown.querySelector('option.first');
+          if (!element) return;
+          element.innerHTML = `${value}...`;
+        };
+
+
+        _removeOptions(element) {
+
+          if (!element) return;
+
+          const options = element.querySelectorAll('option:not(:first-child)');
+
+          if (options.length > 0) {
+            options.forEach((option) => {
+              option.remove();
+            });
+          }
+
+          return;
+        };
+
+
+        _getResponse(response) {
+          return response.text();
+        };
+
+
+        _getOptions(options, tag) {
+          let matches = [...options].filter((option) => {
+            return option.getAttribute('data-group') == tag;
+          });
+          return matches;
+        }
+
+
+        _processHTML(html) {
+
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          const options = doc.querySelectorAll(`option`);
+
+          const firstOptions = this._getOptions(options, this.dataTagOne);
+          const secondOptions = this._getOptions(options, this.dataTagTwo);
+          const submitButtonValue = doc.querySelector('.js-submit').value;
+
+          if (this.filter_count_enabled) {
+            this._updateSubmitButton(this.elements.submitButton, submitButtonValue);
+          }
+          this._appendOptions(firstOptions, this.elements.firstFilter);
+          this._appendOptions(secondOptions, this.elements.secondFilter);
+        };
+
+
+        _appendOptions(options, filter) {
+          if (options.length > 0) {
+            options.forEach((option) => {
+              filter.appendChild(option);
+            });
+          }
+        };
+
+        _removeDefaultOption(target) {
+          const defaultOption = target.querySelector('option.first');
+          if (defaultOption) {
+            defaultOption.remove();
+          }
+        }
+
+        _enableFilters(element) {
+          if (!element) return;
+          element.disabled = false;
+        }
+
+
+        _handleCollectionChange(event) {
+          this._removeDefaultOption(event.target);
+          this.option = event.target.selectedOptions[0];
+          this.dataTagOne = this.option.getAttribute('data-tag-1');
+          this.dataTagTwo = this.option.getAttribute('data-tag-2');
+
+          this._enableFilters(this.elements.form.filter1);
+          this._enableFilters(this.elements.form.filter2);
+
+
+          this._removeOptions(this.elements.firstFilter);
+          this._removeOptions(this.elements.secondFilter);
+
+
+          this._updateDefaultOption(this.elements.firstFilter, this.dataTagOne);
+          this._updateDefaultOption(this.elements.secondFilter, this.dataTagTwo);
+
+          const url = `${event.target.value}?view=filters`;
+
+          fetch(url)
+            .then(this._getResponse)
+            .then(this._processHTML)
+            .catch(this._handleError);
+        };
+
+
+        _handleError(error) {
+          console.warn(error);
+        };
+
+
+        _getFilterValue(element) {
+          if (!element) return;
+          return element.selectedOptions[0].value;
+        };
+
+
+        _handleSubmit(event) {
+
+          const collection = this.elements.form.collection.selectedOptions[0].value;
+          const firstFilterValue = this._getFilterValue(this.elements.form.filter1);
+          const secondFilterValue = this._getFilterValue(this.elements.form.filter2);
+          const anyFilter = firstFilterValue ? true : secondFilterValue ? true : false;
+          const url = `${collection}${anyFilter ? '?' : ''}${firstFilterValue ? firstFilterValue : ''}${secondFilterValue ? (firstFilterValue ? `&${secondFilterValue}` : secondFilterValue ) : ''}`;
+
+          window.location.href = url;
+        };
+      });
+    }
+  }
+  return FilterAndSearch;
+})();
 
 /*============================================================================
   Registering Sections
