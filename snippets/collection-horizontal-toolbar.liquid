@@ -22,9 +22,29 @@
                   assign is_color_filter = true
                 elsif filter_label_to_lowercase contains "couleur"
                   assign is_color_filter = true
+                elsif filter_label_to_lowercase contains "colore"
+                  assign is_color_filter = true
                 elsif filter_label_to_lowercase contains "cor"
                   assign is_color_filter = true
+                elsif filter_label_to_lowercase contains "swatch"
+                  assign is_color_filter = true
+                elsif filter_label_to_lowercase contains "amostra"
+                  assign is_color_filter = true
+                elsif filter_label_to_lowercase contains "échantillon"
+                  assign is_color_filter = true
+                elsif filter_label_to_lowercase contains "muster"
+                  assign is_color_filter = true
                 elsif filter_label_to_lowercase contains "size"
+                  assign is_size_filter = true
+                elsif filter_label_to_lowercase contains "talla"
+                  assign is_size_filter = true
+                elsif filter_label_to_lowercase contains "taglia"
+                  assign is_size_filter = true
+                elsif filter_label_to_lowercase contains "taille"
+                  assign is_size_filter = true
+                elsif filter_label_to_lowercase contains "tamanho"
+                  assign is_size_filter = true
+                elsif filter_label_to_lowercase contains "grosse"
                   assign is_size_filter = true
                 endif
 
@@ -48,9 +68,18 @@
                      size: '15px',
                      fill: 'var(--text-color)',
                      hover: 'var(--text-color)' %}
-                  <input class="chosen-value js-hz-filter-input" type="text" value="" data-filter-type="filter" data-placeholder="{{ filter.label }}" data-generic-placeholder="{{ 'collections.filters.type_to_filter' | t }}" placeholder="{{ filter.label }}">
+                  <input class="chosen-value js-hz-filter-input" type="text" value="" data-filter-type="filter" data-placeholder="{{ filter.label }} {% if filter.operator == 'AND' %}({{ 'collections.filters.match_all' | t }}){% endif %}" data-generic-placeholder="{{ 'collections.filters.type_to_filter' | t }}" placeholder="{{ filter.label }} {% if filter.operator == 'AND' %}({{ 'collections.filters.match_all' | t }}){% endif %}"">
                   <ul class="value-list js-hz-filter-list">
-                    {% for value in filter.values %}
+                    {% liquid
+                      if filter.operator == 'AND'
+                        assign active_values = filter.values | where: 'active', true
+                        assign inactive_values = filter.values | where: 'active', false
+                        assign sorted_values = active_values | concat: inactive_values
+                      else
+                        assign sorted_values = filter.values
+                      endif
+                     %}
+                    {% for value in sorted_values %}
 
                       {%- liquid
 
@@ -76,6 +105,22 @@
                         endif
                       -%}
 
+                      {% liquid
+                        assign size_limit = value.display.value.size | at_most: 4
+                        assign rotation = '0deg'
+                        if size_limit == 2
+                          assign rotation = '45deg'
+                        endif
+
+                        assign angle_increment = 360 | divided_by: size_limit
+                        assign angle = 0
+                      %}
+                      {%- capture conic_gradient -%}
+                        {%- for color in value.display.value limit: size_limit -%}
+                          {{ color }} {{ angle }}deg{%- assign angle = angle | plus: angle_increment %} {{ angle }}deg{%- unless forloop.last %}, {%- endunless -%}
+                        {%- endfor -%}
+                      {%- endcapture -%}
+
                       {% if is_color_filter %}
                         <li class="{{ status }}" data-remove="{{ value.url_to_remove }}" data-add="{{ value.url_to_add }}">
                           <input type="checkbox"
@@ -84,7 +129,22 @@
                                  id="HZ-Filter-{{ filter.label | escape }}-{{ forloop.index }}"
                                  {% if value.active %}checked{% endif %}
                                  {% if value.count == 0 and value.active == false %}disabled{% endif%}>
-                          <span class="color-filter color-filter--rounded color-filter--{{ status }} {{ status }}" style="{{ bg_color }}{{ bg_img }}"></span>
+                          {% if filter.presentation == 'swatch' %}
+                            {% comment %}
+                            We capture the classes out here so that we can pass it into the image_tag filter.
+                            {% endcomment %}
+                            {%- capture classes -%}
+                              color-filter color-filter--rounded color-filter--{{- status -}} {{- status -}}
+                            {%- endcapture -%}
+                            {% case value.display.type %}
+                              {% when 'colors' %}
+                                <div class="{{- classes -}}" style="background: conic-gradient({{ conic_gradient }}); transform: rotateZ({{ rotation }});"></div>
+                              {% when 'image' %}
+                                {{ value.display.value | image_url: width: 300 | image_tag: alt: value.display.value.alt, class: classes }}
+                            {% endcase %}
+                          {% else %}
+                            <span class="color-filter color-filter--rounded color-filter--{{ status }} {{ status }}" style="{{ bg_color }}{{ bg_img }}"></span>
+                          {% endif %}
                           <label class="js-hz-filter-label color-filter--label" for="HZ-Filter-{{ filter.label | escape }}-{{ forloop.index }}">{{ value.label | escape }} <span class="filter__count">({{ value.count }})</span></label>
                         </li>
                       {% else %}
@@ -104,7 +164,7 @@
 
                 <noscript>
                   <!-- No js filters submits with button -->
-                  <label for="Filter-{{ filter.label | escape }}">{{ filter.label | escape }}</label>
+                  <label for="Filter-{{ filter.label | escape }}">{{ filter.label | escape }}{% if filter.operator == 'AND' %} ({{ 'collections.filters.match_all' | t }}){% endif %}"</label>
                   <select id="Filter-{{ filter.label | escape }}" class="styled-select m0 coll-filter">
                     <option value="">{{ 'collections.filters.filters_selected' | t: count: filter.active_values.size }}</option>
                     {% for value in filter.values %}

@@ -19,14 +19,23 @@ Usage:
 %}
 {% endcomment %}
 
-{%- liquid
+{% liquid
 
- assign is_carousel = false
+  assign limit = block.settings.limit | plus: 0
+  assign is_carousel = false
  if block.settings.limit > 3
   assign is_carousel = true
  endif
+  {% comment %}
+  assign no_carousel = false
+  
+  if  block.settings.appearance == 'full' and limit <= 2
+    assign no_carousel = true
+  endif
+  {% endcomment %}
 
--%}
+%}
+
 {% if is_carousel %}
 {% capture slideshow_config %}{
  "wrapAround": true,
@@ -39,7 +48,22 @@ Usage:
 }{% endcapture %}
 {% endif %}
 
-<div class="complementary__products complementary__products--{{ block.id }} product__section-content__block product__section--element" {{ block.shopify_attributes }}>
+{% comment %}
+{% unless no_carousel %}
+  {% capture slideshow_config %}{
+  "wrapAround": true,
+  "freeScroll": false,
+  "dragThreshold":"15",
+  "draggable": true,
+  "cellAlign": "left",
+  "pauseAutoPlayOnHover": false,
+  "prevNextButtons": true,
+  "pageDots": false
+  }{% endcapture %}
+{% endunless %}
+{% endcomment %}
+
+<div class="complementary__products complementary__products--{{ block.id }} product__section-content__block product__section--element{% if block.settings.appearance == 'simple' %} layout--simple{% endif %}" {{ block.shopify_attributes }}>
 {%- if recommendations.performed -%}
   <div class="js-complementary-products {% unless is_carousel %}grid__wrapper edge{% endunless %}"
     data-base-url="{{ routes.product_recommendations_url }}"
@@ -65,19 +89,69 @@ Usage:
           data-aos="{{ settings.scroll_animation }}"
           data-aos-delay="{{ forloop.index | times: 150  }}"
           {% endunless %}>
+          {% comment %}
           {%
             render 'complementary-product-listing',
-            product: product
+            product: product,
+            section: section,
+            block: block
           %}
+          {% endcomment %}
+          {% if block.settings.appearance == 'simple' %}
+              {%
+                render 'complementary-product-listing',
+                product: product,
+                section: section,
+                block: block
+              %}
+            {% else %}
+              {%
+                render 'product-listing',
+                product: product,
+                section: section,
+                block: block
+              %}
+            {% endif %}
         </div>
       {%- endfor -%}
       {% if is_carousel %}
       </div><!-- /.js-carousel -->
       {% endif %}
     {%- endif -%}
+      {% comment %}
+      <div class="complementary__product--loop{% if no_carousel %} no--carousel{% else %} flickity__section js-carousel{% endif %}"{% unless no_carousel %} data-flickity-config='{{ slideshow_config }}'{% endunless%} data-count="{{ recommendations.products_count | plus: 0 }}">
+
+        {%- for product in recommendations.products limit: limit -%}
+          <div class="product-index js-product-listing"
+            data-product-id="{{ product.id }}"
+            data-alpha="{{ product.title }}"
+            data-price="{{ product.price }}">
+            {% if block.settings.appearance == 'simple' %}
+              {%
+                render 'complementary-product-listing',
+                product: product,
+                section: section,
+                block: block
+              %}
+            {% else %}
+              {%
+                render 'product-listing',
+                product: product,
+                section: section,
+                block: block
+              %}
+            {% endif %}
+          </div>
+        {%- endfor -%}
+
+      </div>
+      {% endcomment %}
+      <!-- /.js-carousel -->
+
+    {%- endif -%}
   </div>
 {%- else  -%}
-  <div class="js-complementary-products {% unless is_carousel %}grid__wrapper edge{% endunless %}"
+  <div class="js-complementary-products  {% unless is_carousel %}grid__wrapper edge{% endunless %}"
   data-base-url="{{ routes.product_recommendations_url }}"
   data-product-id="{{ product.id }}"
   data-section-id="{{ section.id }}"

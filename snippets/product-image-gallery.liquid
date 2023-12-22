@@ -22,11 +22,33 @@
             <div class="{{ media.media_type }}-thumbnail product-single__thumbnails-item carousel-cell {% if forloop.first %}is-nav-selected{% endif %} js-thumb-item thumb__{% if forloop.first %}first{% elsif forloop.last %}last{% endif %}" data-slide-index="{{ forloop.index0 }}"
             data-image-id="{{ media.id }}" tabindex="0">
               <div class="product-single__thumbnail product-single__thumbnail--{{ section.id }} js-thumb-item-img-wrap" data-thumbnail-id="product-template-{{ media.id }}">
+                {% liquid
+
+                  # Reset variables inside loop
+                  assign loading = 'lazy'
+                  assign fetch_priority = 'auto'
+
+                  # If one a product page and the section is under index 3 (near the top) because
+                  # the default template has the section below a "breadcrumb" section.
+                  if template == 'product' and section.index < 3
+                    if forloop.index < 10
+                      assign loading = 'eager'
+                      assign fetch_priority = 'high'
+                    endif
+                  elsif section.index == 1
+                    if forloop.index < 10
+                      assign loading = 'eager'
+                      assign fetch_priority = 'high'
+                    endif
+                  endif
+                 %}
                 {%
                   render 'basic-responsive-image',
                   type: media.preview_image,
                   width: 1200,
-                  img_class: 'js-thumb-item-img'
+                  img_class: 'js-thumb-item-img',
+                  loading: loading,
+                  fetchpriority: fetch_priority
                 %}
                 {%- if media.media_type == 'video' or media.media_type =='external_video' -%}
                   <div class="thumbnail-icon">
@@ -97,10 +119,27 @@
                   assign image_box_ratio = media.height | append: ".0" | times: 1 | divided_by: media.width | times: 100 | append: "%"
                   assign zoom_image = media | image_url: width: 2400
 
-                  if first_image.id == media.id
-                    assign lazy = 'eager'
-                  else
-                    assign lazy = 'lazy'
+                  assign loading = 'lazy'
+                  assign fetch_priority = 'auto'
+
+                  if template == 'product' and section.index < 3
+                    if first_image.id == media.id
+                      assign loading = 'eager'
+                      assign fetch_priority = 'high'
+                    endif
+                  elsif section.index == 1
+                    if first_image.id == media.id
+                      assign lazy = 'eager'
+                    else
+                      assign lazy = 'lazy'
+                  endif
+                  {% comment %}
+                    if first_image.id == media.id
+                      assign lazy = 'eager'
+                    else
+                      assign fetch_priority = 'high'
+                    endif
+                    {% endcomment %}
                   endif
 
                 -%}
@@ -114,6 +153,7 @@
                 <div class="box-ratio" style="padding-bottom: {{ image_box_ratio }};">
                   {{ media | image_url: width: 1200 | image_tag:
                     loading: lazy,
+                    fetchpriority: fetch_priority,
                     sizes: sizes,
                     widths: '200, 300, 400, 500, 600, 700, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400, 2600, 2800, 3000',
                     id: media.id,

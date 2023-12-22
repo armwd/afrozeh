@@ -143,7 +143,7 @@
         tabindex="0"
         style="background-color: {{ css_color }};
         {% unless color_swatch_style == 'default-color' %}
-          background-image: url({% if color_swatch_style == 'custom-image' %}{{ image_url }}{% elsif color_swatch_style == 'variant-image' %}{{ variant_image_url }}{% endif %}); background-position: center center; background-size: 50px 50px;
+          background-image: url({% if color_swatch_style == 'custom-image' %}{{ image_url }}{% elsif color_swatch_style == 'variant-image' %}{{ variant_image_url }}{% endif %}); background-position: center center; background-size:50px 50px;
         {% endunless %}">
           {{ sold_out_image }}
         </label>

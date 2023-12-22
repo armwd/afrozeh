@@ -3,7 +3,7 @@
     method="post">
   <div class="ajax-cart__cart-items span-12 auto">
     {% for item in cart.items %}
-      <ul class="item_{{ item.id | append: '-' | append: forloop.index }} ajax-cart__cart-item grid__wrapper edge">
+      <div class="item_{{ item.id | append: '-' | append: forloop.index }} ajax-cart__cart-item grid__wrapper edge">
         <a class="ajax-cart__item-remove--no-js" style="display:none;" href="/cart/change?line={{ forloop.index }}&amp;quantity=0" data-role="product-remove">
           {% render 'snip-icons',
              wrapper: '.ajax-cart__item-remove--no-js',
@@ -14,7 +14,7 @@
              fill: 'var(--text-color)',
              hover: 'var(--text-color)' %}
         </a>
-        <li class="remove_{{ item.id | append: '-' | append: forloop.index }} ajax-cart__item-remove mb0 js-cart-remove"
+        <div class="remove_{{ item.id | append: '-' | append: forloop.index }} ajax-cart__item-remove mb0 js-cart-remove"
           {% if no_js_cart %}style="display: none;"{% endif %}
           data-item-id="{{ item.id | append: '-' | append: forloop.index }}"
           data-item-key="{{ item.key }}"
@@ -27,23 +27,33 @@
              size: '10px',
              fill: 'var(--text-color)',
              hover: 'var(--text-color)' %}
-        </li>
-        <li class="ajax-cart__item-image v-start">
+        </div>
+        <div class="ajax-cart__item-image v-start">
           <div class="ajax-cart__item-image__wrapper">
             <a href="{{ item.url }}" title="{{ item.product.title | escape }}">
               {% if item.image != blank %}
+                {% liquid
+                  assign loading = 'lazy'
+                  assign fetch_priority = 'auto'
+                  if forloop.index < 3
+                    assign loading = 'eager'
+                    assign fetch_priority = 'high'
+                  endif
+                 %}
                 {%
                   render 'basic-responsive-image',
                   type: item.image,
-                  width: 1200
+                  width: 1200,
+                  loading: loading,
+                  fetchpriority: fetch_priority
                 %}
               {% else %}
                 {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
               {% endif %}
             </a>
           </div>
-        </li>
-        <li class="ajax-cart__item-details v-center">
+        </div>
+        <div class="ajax-cart__item-details v-center">
           <div class="ajax-cart__cart-title__wrapper inline-block v-center">
             <p class="ajax-cart__title"><a href="{{ item.product.url }}">{{ item.product.title }}</a></p>
             <div class="ajax-cart__cart-variants">
@@ -78,8 +88,8 @@
               {% endif %}
             </div>
           </div>
-        </li>
-        <li class="ajax-cart__item-price v-center">
+        </div>
+        <div class="ajax-cart__item-price v-center">
           {%- assign hasDiscount = false -%}
           {%- if item.original_price != item.final_price -%}
             {%- assign hasDiscount = true -%}
@@ -148,9 +158,9 @@
             {%- assign itemDiscounts = item.line_level_discount_allocations -%}
           {%- endif -%}
 
-          <ul class="ajax-cart__order-discount mb0 order-discount--list order-discount--title order-discount--cart{% if item.line_level_discount_allocations == blank %} hide{% endif %}" aria-label="{{ 'customer.order.discount' | t }}" data-cart-item-discount-list>
+          <div class="ajax-cart__order-discount mb0 order-discount--list order-discount--title order-discount--cart{% if item.line_level_discount_allocations == blank %} hide{% endif %}" aria-label="{{ 'customer.order.discount' | t }}" data-cart-item-discount-list>
             {%- for discount_allocation in itemDiscounts -%}
-              <li class="order-discount__item" data-cart-item-discount>
+              <div class="order-discount__item" data-cart-item-discount>
                 <p class="onsale">
                   {% render 'snip-icons',
                      wrapper: '.order-discount__item',
@@ -164,11 +174,11 @@
                     {{- discount_allocation.discount_application.title -}}
                   </span> (-<span data-cart-item-discount-amount>{{ discount_allocation.amount | money }}</span>)
                  </p>
-              </li>
+              </div>
             {%- endfor -%}
-          </ul>
-        </li>
-        <li class="ajax-cart__item-qty v-center js-item-quantity">
+          </div>
+        </div>
+        <div class="ajax-cart__item-qty v-center js-item-quantity">
           <div class="ajax-cart__item-quantity a-left">
             <button data-ajax-qty-decrease="{{ item.id | append: '-' | append: forloop.index }}" data-item-key="{{ item.key }}" class="downer-{{ item.id | append: '-' | append: forloop.index }} ajax-cart__qty-control--down mb0 v-center" type="button"><span class="visuallyhidden">{{ 'cart.general.decrease' | t: product: item.title | escape }}</span>-</button>
             <input class="updates_{{ item.id | append: '-' | append: forloop.index }} {% if no_js_cart %}ajax-cart__qty-input--no-js{% else %}ajax-cart__qty-input{% endif %} v-center a-center"
@@ -184,8 +194,8 @@
             <button data-ajax-qty-increase="{{ item.id | append: '-' | append: forloop.index }}" class="up-{{ item.id | append: '-' | append: forloop.index }} ajax-cart__qty-control--up mb0 v-center" type="button"><span class="visuallyhidden">{{ 'cart.general.increase' | t: product: item.title | escape }}</span>+</button>
           </div>
           <input class="ajax-cart__item-update--no-js button-as-link" type="submit" name="update" style="display:none;" value="{{ 'cart.general.update' | t }}">
-        </li>
-        <li class="ajax-cart__item-line-price v-center">
+        </div>
+        <div class="ajax-cart__item-line-price v-center">
           <dl {% unless item.original_line_price != item.final_line_price %}class="hide" {% endunless %}data-cart-item-discounted-price-group>
             <dt>
               <span class="visually-hidden">{{ 'cart.label.regular_total' | t }}</span>
@@ -203,45 +213,52 @@
           <div {% if item.original_line_price != item.final_line_price %}class="hide" {% endif %}data-cart-item-regular-price-group>
             <span data-cart-item-regular-price>{{ item.original_line_price | money }}</span>
           </div>
-        </li>
-      </ul>
+        </div>
+      </div>
     {% endfor %}
   </div>
   <div class="ajax-cart__info-wrapper a-left {% if cart.item_count < 1 %}hide{% endif %} js-cart-info">
-    <ul class="ajax-cart__accordion js-cart-accordion">
+    <div class="ajax-cart__accordion js-cart-accordion">
+      {% if settings.show_cart_giftwrap %}
+        <span class="gift--wrap">
+          <label for="gift_wrap">
+            <input type="checkbox" id="gift_wrap" name="attributes[Gift Wrap]" value="Yes">
+            {{ 'cart.general.gift_wrap' | t }}
+          </label>
+        </span>
+      {% endif %}
       {% if settings.show_cart_notes %}
-        <li class="tlink has_sub_menu closed">
+        <div class="tlink has_sub_menu closed">
           <a class="closed" aria-haspopup="true" aria-expanded="false" href="">{{ 'cart.general.note' | t }}</a>
           <span class="icon inactive-arrow">+</span>
           <span class="icon active-arrow">-</span>
-        </li>
-        <ul class="accordion-content sub closed">
+        </div>
+        <div class="accordion-content sub closed">
           <div class="a-left">
             <label class="visuallyhidden" for="note">{{ 'cart.general.note' | t }}</label>
             <textarea name="note" id="note" rows="5" cols="60" class="js-cart-note">{{ cart.note }}</textarea>
           </div>
-        </ul>
+        </div>
       {% endif %}
       {% if settings.show_shipping_calculator %}
-        <li class="tlink2 has_sub_menu closed ajax-cart__accordion--shipping-calc">
+        <div class="tlink2 has_sub_menu closed ajax-cart__accordion--shipping-calc">
           <a class="closed" aria-haspopup="true" aria-expanded="false" href="">{{ 'cart.general.calc_heading' | t }}</a>
           <span class="icon inactive-arrow">+</span>
           <span class="icon active-arrow">-</span>
-        </li>
-        <ul class="accordion-content2 sub closed">
+        </div>
+        <div class="accordion-content2 sub closed">
           {% render 'cart-shipping-calculator', cart %}
-        </ul>
+        </div>
       {% endif %}
-    </ul>
+    </div>
       {% if settings.show_shipping_countdown %}
         <div class="ajax-cart__free-shipping">
           {% render 'cart-shipping-countdown', cart %}
         </div>
       {% endif %}
   </div>
- 
   <div class="ajax-cart__summary-wrapper {% if cart.item_count < 1 %}hide{% endif %} js-cart-summary">
-     <span class="cart-special-note">
+  <span class="cart-special-note">
       To ensure a seamless payment transaction, please utilize the 3DS card.
      </span>
     <div class="ajax-cart__final-details">
@@ -264,9 +281,9 @@
       <div class="discounts">
         {%- if cart.cart_level_discount_applications != blank -%}
           <p class="a-left">{{ 'cart.general.discounts' | t }}</p>
-          <ul class="a-right">
+          <div class="a-right">
             {%- for discount_application in cart.cart_level_discount_applications -%}
-              <li>
+              <div>
                 {% render 'snip-icons',
                  wrapper: '.discounts',
                  type: 'apollo',
@@ -276,9 +293,9 @@
                  fill: 'var(--sale-color)',
                  hover: 'var(--sale-color)' %}
                 <span class="vi-center sale-color">{{ discount_application.title }}(-{{ discount_application.total_allocated_amount | money }})</span>
-              </li>
+              </div>
             {%- endfor -%}
-          </ul>
+          </div>
         {%- else -%}
           {% if cart.total_discounts > 0 %}
             <div class="cart_savings onsale">

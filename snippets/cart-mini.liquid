@@ -35,4 +35,15 @@
   <div class="ajax-cart__form-wrapper cart-wrapper js-ajax-cart-content">
 
   </div>
+  {%- unless request.design_mode -%}
+    {%- if additional_checkout_buttons -%}
+      <div class="ajax-cart__footer-wrapper grid__wrapper edge">
+        <div class="{{ footer_grid }} sm-span-12 auto" id="dynamic">
+          <div class="ajax-cart__buttons-additional">
+            {{ content_for_additional_checkout_buttons }}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endunless -%}
 </section>
