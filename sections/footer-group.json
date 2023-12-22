@@ -1,1 +1,87 @@
-{"name":"Footer","type":"footer","sections":{"6e1e7f0e-a8ab-4b5d-b533-03e147b1d76c":{"type":"newsletter","disabled":true,"settings":{"show_social_icons":false,"heading":"Subscribe to our newsletter","newsletter_subheading":"<p>Signup for our newsletter to stay up to date on sales and events.<\/p>","text_color":"#ffffff","newsletter_background":"#232323","newsletter_button_color":"#ffffff"}},"footer":{"type":"footer","blocks":{"7e0d76eb-47a2-4fc8-ba0b-5d15b368931a":{"type":"menu","settings":{"footer_nav":"about-us","heading":"About"}},"1480972996114":{"type":"menu","settings":{"footer_nav":"footer","heading":"Policies"}},"f507cfca-5538-4cef-ace7-d3eeef2b226e":{"type":"menu","settings":{"footer_nav":"lookbook","heading":"LookBook"}},"7573dc8f-9c67-4f42-a39c-e55397bf9d65":{"type":"text","settings":{"heading":"HOW CAN WE HELP YOU?","footer_text":"<p>Timings:<br\/>Monday to Saturday 10:00 Am to 06:00 PM.<br\/>Info.afrozeh@gmail.com<\/p>","show_social_icon":false,"show_newsletter":false}},"b54ad7ef-01f1-43ef-92c4-bb0e48595bce":{"type":"text","settings":{"heading":"JOIN OUR NEWSLETTER","footer_text":"<p>Subscribe to our newsletter to get latest updates.<\/p>","show_social_icon":true,"show_newsletter":true}}},"block_order":["7e0d76eb-47a2-4fc8-ba0b-5d15b368931a","1480972996114","f507cfca-5538-4cef-ace7-d3eeef2b226e","7573dc8f-9c67-4f42-a39c-e55397bf9d65","b54ad7ef-01f1-43ef-92c4-bb0e48595bce"],"custom_css":[],"settings":{"footer_text_align":"left","footer_title_transform":"uppercase","footer_title_size":14,"show_credit_cards":false,"show_social_icons":false,"enable_follow_on_shop":false,"show_copyright":true,"show_locale_selector":false,"show_country_selector":false}}},"order":["6e1e7f0e-a8ab-4b5d-b533-03e147b1d76c","footer"]}
+{
+    "name": "Footer",
+    "type": "footer",
+    "sections": {
+      "6e1e7f0e-a8ab-4b5d-b533-03e147b1d76c": {
+        "type": "newsletter",
+        "disabled": true,
+        "settings": {
+          "show_social_icons": false,
+          "heading": "Subscribe to our newsletter",
+          "newsletter_subheading": "<p>Signup for our newsletter to stay up to date on sales and events.<\/p>",
+          "text_color": "#ffffff",
+          "newsletter_background": "#232323",
+          "newsletter_button_color": "#ffffff"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "7e0d76eb-47a2-4fc8-ba0b-5d15b368931a": {
+            "type": "menu",
+            "settings": {
+              "footer_nav": "about-us",
+              "heading": "About"
+            }
+          },
+          "1480972996114": {
+            "type": "menu",
+            "settings": {
+              "footer_nav": "footer",
+              "heading": "Policies"
+            }
+          },
+          "f507cfca-5538-4cef-ace7-d3eeef2b226e": {
+            "type": "menu",
+            "settings": {
+              "footer_nav": "lookbook",
+              "heading": "LookBook"
+            }
+          },
+          "7573dc8f-9c67-4f42-a39c-e55397bf9d65": {
+            "type": "text",
+            "settings": {
+              "heading": "HOW CAN WE HELP YOU?",
+              "footer_text": "<p>Timings:<br\/>Monday to Saturday 10:00 Am to 06:00 PM.<br\/>Info.afrozeh@gmail.com<\/p>",
+              "show_social_icon": false,
+              "show_newsletter": false
+            }
+          },
+          "b54ad7ef-01f1-43ef-92c4-bb0e48595bce": {
+            "type": "text",
+            "settings": {
+              "heading": "JOIN OUR NEWSLETTER",
+              "footer_text": "<p>Subscribe to our newsletter to get latest updates.<\/p>",
+              "show_social_icon": true,
+              "show_newsletter": true
+            }
+          }
+        },
+        "block_order": [
+          "7e0d76eb-47a2-4fc8-ba0b-5d15b368931a",
+          "1480972996114",
+          "f507cfca-5538-4cef-ace7-d3eeef2b226e",
+          "7573dc8f-9c67-4f42-a39c-e55397bf9d65",
+          "b54ad7ef-01f1-43ef-92c4-bb0e48595bce"
+        ],
+        "custom_css": [
+  
+        ],
+        "settings": {
+          "footer_text_align": "left",
+          "footer_title_transform": "uppercase",
+          "footer_title_size": 14,
+          "show_credit_cards": false,
+          "show_social_icons": false,
+          "enable_follow_on_shop": false,
+          "show_copyright": true,
+          "show_locale_selector": false,
+          "show_country_selector": false
+        }
+      }
+    },
+    "order": [
+      "6e1e7f0e-a8ab-4b5d-b533-03e147b1d76c",
+      "footer"
+    ]
+  }
