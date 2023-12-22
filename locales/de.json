@@ -25,7 +25,7 @@
       "age_description": "Sie müssen volljährig sein, um fortfahren zu können.",
       "age_terms": "Erfahren Sie mehr über unsere Nutzungsbedingungen.",
       "age_enter": "Ja — Site eingeben"
-    },  
+    },
     "404": {
       "title": "Hoppla – das konnten wir nicht finden",
       "subtext": "Diese Seite existiert nicht. Versuchen Sie, nach dem zu suchen, was Sie gerne finden möchten:",
@@ -52,8 +52,8 @@
         "twitter": "Auf Twitter teilen",
         "pinterest": "Auf Pinterest teilen"
       },
-    	  "share": "Teilen"
-    	},
+      "share": "Teilen"
+    },
     "meta": {
       "tags": "Getaggt \"{{ tags }}\"",
       "page": "Seite {{ page }}"
@@ -126,12 +126,12 @@
       "discount_applied": "Rabatt angewandt:",
       "savings": "Ersparnisse insgesamt",
       "discounts": "Rabatte",
-			"cart_discount": "Rabattcode (An der Kasse angewendet)",
-			"free_shipping_before": "Sie sind nur",
-			"free_shipping_after": "weg von kostenlosem Versand im Inland!",
-			"free_shipping_qualified": "Ihre Bestellung ist für kostenlosen Inlandsversand qualifiziert!",
-			"free_shipping_exclusions": "(Außer international)",
-			"items": "Artikel",
+      "cart_discount": "Rabattcode (An der Kasse angewendet)",
+      "free_shipping_before": "Sie sind nur",
+      "free_shipping_after": "weg von kostenlosem Versand im Inland!",
+      "free_shipping_qualified": "Ihre Bestellung ist für kostenlosen Inlandsversand qualifiziert!",
+      "free_shipping_exclusions": "(Außer international)",
+      "items": "Artikel",
       "cart_error": "Warenkorbfehler",
       "form_error": "Formularfehler",
       "update_qty_error": "Einige Artikel waren nicht mehr verfügbar. Aktualisieren Sie die Menge und versuchen Sie es erneut.",
@@ -148,14 +148,16 @@
       "calc_heading": "Versand schätzen",
       "calc_shipping": "Berechnen Sie Versandkosten",
       "calc_calculating": "Berechnen...",
-			"go_shopping": "Einkaufen gehen",
-			"in_shopping_cart": "in Ihrem Warenkorb",
-			"view_cart": "Warenkorb ansehen",
+      "go_shopping": "Einkaufen gehen",
+      "in_shopping_cart": "in Ihrem Warenkorb",
+      "view_cart": "Warenkorb ansehen",
       "input_label": "Anzahl von {{ product }}",
       "increase": "Erhöhe die Menge für {{ product }}",
-      "decrease": "Verringere die Menge für {{ product }}"
-		}
-	},
+      "decrease": "Verringere die Menge für {{ product }}",
+      "featured_items": "Ausgewählte Artikel",
+      "gift_wrap": "Geschenkverpackung (kostenlos)"
+    }
+  },
   "sections": {
     "contact_form": {
       "name": "Name",
@@ -167,6 +169,13 @@
     },
     "tabbed_collections": {
       "collection": "Sammlung {{ index }}"
+    },
+    "search_and_filter": {
+      "select": "Suchen...",
+      "results_count": {
+        "one": "{{ count }} Artikel durchsuchen",
+        "other": "Durchsuchen Sie {{ count }} Artikel"
+      }
     },
     "countdown": {
       "days": "Tage",
@@ -196,8 +205,8 @@
       "get_directions": "Anweisungen bekommen",
       "address_error": "Fehler beim Nachschlagen dieser Adresse",
       "address_no_results": "Keine Ergebnisse für diese Adresse",
-      "address_query_limit": "Sie haben das Nutzungslimit für die Google API überschritten. Erwägen Sie ein Upgrade auf einen Premium-Plan (https:\/\/developers.google.com\/maps\/premium\/usage-limits\).",
-      "auth_error": "Beim Authentifizieren Ihres Google Maps-Kontos ist ein Problem aufgetreten. Erstellen und aktivieren Sie die JavaScript-API (https:\/\/developers.google.com\/maps\/documentation\/javascript\/get-api-key\) and Geocoding API (https:\/\/developers.google.com\/maps\/documentation\/geocoding\/get-api-key\) permissions of your app."
+      "address_query_limit": "Sie haben das Nutzungslimit für die Google API überschritten. Erwägen Sie ein Upgrade auf einen Premium-Plan (https:\/\/developers.google.com\/maps\/premium\/usage-limits).",
+      "auth_error": "Beim Authentifizieren Ihres Google Maps-Kontos ist ein Problem aufgetreten. Erstellen und aktivieren Sie die JavaScript-API (https:\/\/developers.google.com\/maps\/documentation\/javascript\/get-api-key) and Geocoding API (https:\/\/developers.google.com\/maps\/documentation\/geocoding\/get-api-key) permissions of your app."
     },
     "featured_collection": {
       "view_all": "Alle ansehen"
@@ -216,8 +225,9 @@
       "filters_selected": "{{ count }} ausgewählt",
       "sort_by_placeholder": "Relevanz",
       "to": "To",
-      "use_fewer_filters_html": "Verwenden Sie weniger Filter oder <a class=\"{{ class }}\" href=\"{{ link }}\">löschen Sie alle</a>",
-      "type_to_filter": "Zum Filtern eingeben"
+      "use_fewer_filters_html": "Verwenden Sie weniger Filter oder <a class=\"{{ class }}\" href=\"{{ link }}\">löschen Sie alle<\/a>",
+      "type_to_filter": "Zum Filtern eingeben",
+      "match_all": "Allen entsprechen"
     },
     "sorting": {
       "title": "Sortieren nach"
@@ -269,7 +279,8 @@
       "sign_in": "Anmelden",
       "cancel": "Zum Laden zurückkehren",
       "guest_title": "Weiter als Gast",
-      "guest_continue": "Weiter"
+      "guest_continue": "Weiter",
+      "or": "oder"
     },
     "orders": {
       "title": "Bestellverlauf",
@@ -343,10 +354,14 @@
       "sample_product": "Beispielprodukt {{ index }}",
       "product_vendor": "Ausgewählter Produktanbieter",
       "product_title": "Ausgewählter Produkttitel",
-      "product_description": "Eine Beispielproduktbeschreibung für ein vorgestelltes Produkt."
+      "product_description": "Eine Beispielproduktbeschreibung für ein vorgestelltes Produkt.",
+      "vendor": "VERKÄUFER",
+      "title": "Produktname"
     },
     "product": {
       "select_option": "Wähle eine Option",
+      "more_available": "Mehr {{ product_options }} verfügbar",
+      "features": "Hauptmerkmale",
       "required": "Erforderlich",
       "details":"Detail",
       "sold_out": "Ausverkauft",
@@ -356,23 +371,20 @@
       "include_taxes": "inkl. MwSt.",
       "shipping_policy_html": "zzgl. <a href=\"{{ link }}\">Versandkosten<\/a>",
       "add_to_cart": "Zum Einkaufswagen hinzufügen",
-      "adding": "Hinzufügen…",
-      "added": "In den Warenkorb gelegt",
+      "adding": "… wird zugefügt",
+      "added": "Zum Einkaufswagen hinzugefügt",
       "pre_order": "Vorbestellen",
       "quantity": "Menge",
       "back_to": "Zurück nach",
       "previous_product_html": "&larr; Vorheriges Produkt",
       "next_product_html": "Nächstes Produkt &rarr;",
-      "adding": "… wird zugefügt",
       "thank_you": "Dankesehr!",
-      "added": "Zum Einkaufswagen hinzugefügt",
-      "view_cart": "Einkaufswagen ansehen",
+      "view_cart": "Einkaufswagen Cart",
       "or": "oder",
       "continue": "Weiter einkaufen",
       "add_to_cart_success_link": "Einkaufswagen ansehen und zur Kasse gehen!",
       "add_to_cart_success_html": "Artikel hinzugefügt {{ link }}",
       "unit_price_label": "Stückpreis",
-      "view_cart": "Einkaufswagen Cart",
       "view_in_space": "In Ihrem Raum anzeigen",
       "view_in_space_label": "In Ihrem Raum anzeigen, lädt Artikel in Augmented-Reality-Fenster",
       "only_left": {

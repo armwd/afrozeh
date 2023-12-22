@@ -51,8 +51,8 @@
         "twitter": "Twitta su Twitter",
         "pinterest": "Aggiungi un pin su Pinterest"
       },
-   	  "share": "Condividere"
-   	},
+      "share": "Condividere"
+    },
     "meta": {
       "tags": "Taggato \"{{ tags }}\"",
       "page": "Pagina {{ page }}"
@@ -109,7 +109,7 @@
   },
   "cart": {
     "general": {
-      "title": "Carello",
+      "title": "Carello",      
       "at_checkout": "calcolata al check out",
       "empty": "il tuo carrello è vuoto",
       "product": "Prodotto",
@@ -133,7 +133,7 @@
       "items": "Articolo/i",
       "cart_error": "Errore carrello",
       "form_error": "Errore modulo",
-			"update_qty_error": "Alcuni articoli non sono più disponibili. Aggiorna la quantità e riprova",
+      "update_qty_error": "Alcuni articoli non sono più disponibili. Aggiorna la quantità e riprova",
       "tax": "Tasse",
       "shipping": "Spedizione",
       "at_checkout": "Calcolato alla cassa",
@@ -149,7 +149,9 @@
       "calc_calculating": "Calcolo in corso..",
       "input_label": "Quantità per {{ product }}",
       "increase": "Aumenta la quantità per {{ product }}",
-      "decrease": "Diminuisci la quantità per {{ product }}"
+      "decrease": "Diminuisci la quantità per {{ product }}",
+      "featured_items": "Prodotti in primo piano",
+      "gift_wrap": "Confezione regalo (gratuita)"
     }
   },
   "sections": {
@@ -163,6 +165,13 @@
     },
     "tabbed_collections": {
       "collection": "Collezione {{ index }}"
+    },
+    "search_and_filter": {
+      "select": "Ricerca...",
+      "results_count": {
+        "one": "Cerca {{ count }} elemento",
+        "other": "Cerca {{ count }} articoli"
+      }
     },
     "countdown": {
       "days": "Giorni",
@@ -192,7 +201,7 @@
       "get_directions": "Ottenere indicazioni",
       "address_error": "Errore durante la ricerca di quell'indirizzo",
       "address_no_results": "Nessun risultato per quell'indirizzo",
-      "address_query_limit": "Hai superato il limite di utilizzo dell'API di Google. Prendi in considerazione l'aggiornamento a un piano Premium (https:\/\/developers.google.com\/maps\/premium\/usage-limits\).",
+      "address_query_limit": "Hai superato il limite di utilizzo dell'API di Google. Prendi in considerazione l'aggiornamento a un piano Premium (https:\/\/developers.google.com\/maps\/premium\/usage-limits).",
       "auth_error": "Si è verificato un problema durante l'autenticazione del tuo account Google Maps."
     },
     "featured_collection": {
@@ -212,8 +221,9 @@
       "filters_selected": "{{ count }} selezionato",
       "sort_by_placeholder": "Ordina per",
       "to": "A",
-      "use_fewer_filters_html": "Nessun risultato. Usa meno filtri o <a class=\"{{ class }}\" href=\"{{ link }}\">Cancella tutto</a>",
-      "type_to_filter": "Digita per filtrare"
+      "use_fewer_filters_html": "Nessun risultato. Usa meno filtri o <a class=\"{{ class }}\" href=\"{{ link }}\">Cancella tutto<\/a>",
+      "type_to_filter": "Digita per filtrare",
+      "match_all": "Seleziona tutte"
     },
     "sorting": {
       "title": "Ordina per"
@@ -266,7 +276,8 @@
       "sign_in": "Accedi",
       "cancel": "Chiudi",
       "guest_title": "Continua senza registrarti",
-      "guest_continue": "Continua"
+      "guest_continue": "Continua",
+      "or": "ou"
     },
     "orders": {
       "title": "Cronologia degli ordini",
@@ -340,10 +351,14 @@
       "sample_product": "Prodotto di esempio {{ index }}",
       "product_vendor": "Venditore",
       "product_title": "Titolo del prodotto in evidenza",
-      "product_description": "Una descrizione del prodotto di esempio per un prodotto in evidenza"
+      "product_description": "Una descrizione del prodotto di esempio per un prodotto in evidenza",
+      "vendor": "VENDITORE",
+      "title": "Titolo del prodotto"
     },
     "product": {
       "select_option": "Selezionare l'opzione",
+      "more_available": "Più {{ product_options }} disponibili",
+      "features": "Caratteristiche principali",
       "required": "necessario",
       "details": "Dettagli",
       "sold_out": "Esaurito",
@@ -414,6 +429,6 @@
     }
   },
   "date_formats": {
-   "month_date_year": "%B %d %Y"
+    "month_date_year": "%B %d %Y"
   }
 }

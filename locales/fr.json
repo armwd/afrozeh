@@ -21,11 +21,11 @@
       "powered": "Cette boutique sera optimisée par"
     },
     "age_verification": {
-			"age_title": "Avez-vous au moins  {{ age }}?",
-			"age_description": "Vous devez avoir l'âge légal pour boire pour continuer.",
-			"age_terms": "Découvrez nos conditions d'utilisation.",
-			"age_enter": "Oui — Entrer dans le site"
-		},
+      "age_title": "Avez-vous au moins  {{ age }}?",
+      "age_description": "Vous devez avoir l'âge légal pour boire pour continuer.",
+      "age_terms": "Découvrez nos conditions d'utilisation.",
+      "age_enter": "Oui — Entrer dans le site"
+    },
     "404": {
       "title": "Oups - Nous n'avons pas pu trouver celui-là",
       "subtext": "Cette page n'existe pas. Essayez de chercher ce que vous souhaitez trouver:",
@@ -52,8 +52,8 @@
         "twitter": "Partager sur Twitter",
         "pinterest": "Partager sur Pinterest"
       },
-   	  "share": "Partager"
-   	},
+      "share": "Partager"
+    },
     "meta": {
       "tags": "Balises \"{{ tags }}\"",
       "page": "Page {{ page }}"
@@ -109,11 +109,11 @@
     }
   },
   "cart": {
-		"general": {
-			"title": "Mon panier",
-			"empty": "Votre panier est actuellemnt vide.",
-			"product": "Produit",
-			"price": "Prix",
+    "general": {
+      "title": "Mon panier",
+      "empty": "Votre panier est actuellemnt vide.",
+      "product": "Produit",
+      "price": "Prix",
       "qty": "Qté",
       "remove": "Supprimer",
       "total": "Total",
@@ -125,12 +125,12 @@
       "discount_applied": "Réduction appliquée:",
       "savings": "Total des économies",
       "discounts": "Réductions",
-			"cart_discount": "Code de réduction (appliqué lors du paiement)",
-			"free_shipping_before": "Vous n'êtes qu'à",
-			"free_shipping_after": "away from Free Domestic Shipping!",
-			"free_shipping_qualified": "de la livraison gratuite sur le territoire national !",
-			"free_shipping_exclusions": "(À l'exclusion de l'international)",
-			"items": "Article(s)",
+      "cart_discount": "Code de réduction (appliqué lors du paiement)",
+      "free_shipping_before": "Vous n'êtes qu'à",
+      "free_shipping_after": "away from Free Domestic Shipping!",
+      "free_shipping_qualified": "vous avez obtenu la livraison gratuite",
+      "free_shipping_exclusions": "(À l'exclusion de l'international)",
+      "items": "Article(s)",
       "cart_error": "Erreur de panier",
       "form_error": "Erreur de formulaire",
       "update_qty_error": "Certains articles sont devenus indisponibles. Mettez à jour la quantité et réessayez.",
@@ -147,14 +147,16 @@
       "calc_heading": "Obtenez une estimation d'expédition",
       "calc_shipping": "Calculer Frais de port",
       "calc_calculating": "Calculatrice...",
-			"go_shopping": "Aller faire les courses",
-			"in_shopping_cart": "dans votre panier",
-			"view_cart": "Voir le panier",
+      "go_shopping": "Aller faire les courses",
+      "in_shopping_cart": "dans votre panier",
+      "view_cart": "Voir le panier",
       "input_label": "Quantité pour {{ product }}",
       "increase": "Augmenter la quantité de {{ product }}",
-      "decrease": "Réduire la quantité de {{ product }}"
-		}
-	},
+      "decrease": "Réduire la quantité de {{ product }}",
+      "featured_items": "Articles en vedette",
+      "gift_wrap": "Emballage cadeau (gratuit)"
+    }
+  },
   "sections": {
     "contact_form": {
       "name": "Nom",
@@ -166,6 +168,13 @@
     },
     "tabbed_collections": {
       "collection": "Le recueil {{ index }}"
+    },
+    "search_and_filter": {
+      "select": "Recherche...",
+      "results_count": {
+        "one": "Rechercher {{ count }} article",
+        "other": "Rechercher {{ count }} articles"
+      }
     },
     "countdown": {
       "days": "Jours",
@@ -195,8 +204,8 @@
       "get_directions": "Obtenir des directions",
       "address_error": "Erreur lors de la recherche de cette adresse",
       "address_no_results": "Aucun résultat pour cette adresse",
-      "address_query_limit": "Vous avez dépassé la limite d'utilisation de l'API Google. Envisagez de passer à un plan Premium (https:\/\/developers.google.com\/maps\/premium\/usage-limits\).",
-      "auth_error": "Un problème est survenu lors de l'authentification de votre compte Google Maps. Créez et activez le JavaScript API (https:\/\/developers.google.com\/maps\/documentation\/javascript\/get-api-key\) and Geocoding API (https:\/\/developers.google.com\/maps\/documentation\/geocoding\/get-api-key\) permissions of your app."
+      "address_query_limit": "Vous avez dépassé la limite d'utilisation de l'API Google. Envisagez de passer à un plan Premium (https:\/\/developers.google.com\/maps\/premium\/usage-limits).",
+      "auth_error": "Un problème est survenu lors de l'authentification de votre compte Google Maps. Créez et activez le JavaScript API (https:\/\/developers.google.com\/maps\/documentation\/javascript\/get-api-key) and Geocoding API (https:\/\/developers.google.com\/maps\/documentation\/geocoding\/get-api-key) permissions of your app."
     },
     "featured_collection": {
       "view_all": "Voir tout"
@@ -216,7 +225,8 @@
       "sort_by_placeholder": "Pertinence",
       "to": "à",
       "use_fewer_filters_html": "Utilisez moins de filtres ou <a class=\"{{ class }}\" href=\"{{ link }}\">effacez tout</a>",
-      "type_to_filter": "Tapez à filtrer"
+      "type_to_filter": "Tapez à filtrer",
+      "match_all": "Tout associer"
     },
     "sorting": {
       "title": "Trier par"
@@ -268,7 +278,8 @@
       "guest_title": "Continuer en tant qu'invité",
       "password": "Mot de passe",
       "sign_in": "Se connecter",
-      "title": "S'identifier"
+      "title": "S'identifier",
+      "or": "ou"
     },
     "orders": {
       "date": "Date",
@@ -340,10 +351,14 @@
       "sample_product": "Échantillon de produit {{ index }}",
       "product_vendor": "Fournisseur de produits en vedette",
       "product_title": "Titre du produit en vedette",
-      "product_description": "Un exemple de description de produit pour un produit vedette."
+      "product_description": "Un exemple de description de produit pour un produit vedette.",
+      "vendor": "FOURNISSEUSE",
+      "title": "Titre du produit"
     },
     "product": {
       "select_option": "Sélectionnez une option",
+      "more_available": "Plus de {{ product_options }} disponible(s)",
+      "features": "Caractéristiques clés",
       "required": "Obligatoire",
       "details":"détail",
       "sold_out": "Épuisé",
@@ -361,16 +376,13 @@
       "back_to": "Retour à",
       "previous_product_html": "Produit précédent",
       "next_product_html": "Produit suivant",
-      "adding": "Ajout…",
       "thank_you": "Merci !",
-      "added": "Ajouté au panier",
-      "view_cart": "Voir le panier",
+      "view_cart": "Voir le Panier",
       "or": "ou",
       "continue": "Continer les achats",
       "add_to_cart_success_link": "Voir le panier et payer !",
       "add_to_cart_success_html": "Article ajouté {{ link }}",
       "unit_price_label": "Prix unitaire",
-      "view_cart": "Voir le Panier",
       "view_in_space": "Voir dans votre espace",
       "view_in_space_label": "Visualisez dans votre espace, charge l'élément dans la fenêtre de réalité augmentée",
       "only_left": {
